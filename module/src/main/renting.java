@@ -1,6 +1,6 @@
 package main;
 
-public class renting {
+public class Renting {
     public int rentID; 
     public int nights; 
     public Boolean rentFlag; 

@@ -1,6 +1,7 @@
 package main;
+import main.Unit;
 
-public class user {
+public class User {
     public String userType;
     public String username;
     public String password;
@@ -17,6 +18,9 @@ public class user {
     public void logout() {}
     public void create(String newUsername, String newUsertype){}
     public void delete(String username){}
-
+    public Unit post(String city, Float rentPrice, int bedrooms){
+        Unit unit = new Unit(city, rentPrice, bedrooms);
+        return unit; 
+    }
 
 }

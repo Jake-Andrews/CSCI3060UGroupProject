@@ -1,10 +1,14 @@
 package main;
 
-public class unit {
+public class Unit {
     public String city; 
     public Float rentPrice; 
     public int bedrooms; 
     public Boolean rentFlag; 
+
+    public Unit(String city, Float rentPrice, int bedrooms){
+
+    }
 
     public void setCity(String city){}
     public String getCity(){
