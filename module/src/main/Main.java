@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         //gets user to type login, type username, then create user class that will handle the rest
 
+        while(true) {
 
         //get the user to type login
         Scanner sc = new Scanner(System.in);
@@ -33,5 +34,7 @@ public class Main {
         User user = new User(userInput, command.getUserType(userInput));
         //let them choose a command
         user.getCommands();
+    }
+
     }
 }

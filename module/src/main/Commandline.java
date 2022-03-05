@@ -20,9 +20,9 @@ public class Commandline {
             String trimmed = user.trim().replaceAll("_{2,}", "_").trim();
             //Since there are only one _ between words, split based on _ 
             String[] line = trimmed.split("_");
-            for (String testing: line) {
-                System.out.println("TEST: " + testing);
-            }
+            //for (String testing: line) {
+            //    System.out.println("TEST: " + testing);
+            //}
             System.out.println("0: " + line[0] + ", " + line[1]);
             if (username.equals(line[0])) {
                 return line[1];
@@ -88,26 +88,26 @@ public class Commandline {
     public String getInput(String userType) {
         //Get user input, while loop to make sure input is not empty. Give help commands if they want them. 
         System.out.println("Please enter a command!\nFor a list of commands type (help)!");
-        try (Scanner scanner = new Scanner(System.in)) {
-            String userInput = scanner.nextLine();
-            if (userInput.matches("^.*help.*$")){
-            //regex to match help, and checks for help as a substring
-            //if (userInput.matches("(?i).*help.*")){
-                printCommands();
-                scanner.nextLine();
-            };
-            //while (userInput.isEmpty() && !(userInput.matches("^.*?(item1|item2|item3).*$"))){
-            while (userInput.isEmpty() && !(userInput.matches("^.*?(login|logout|create|delete|post|search|rent).*$"))){
-                System.out.println("Please input a valid command!");
-                userInput = scanner.nextLine();
-            }
-            //once this is reached, a valid command has been entered
-            //determine what the command was, get the req input, return this input
-            //in the form of a space seperated list
-            System.out.println("Command given: " + userInput);
-            String usersCommands = determineCommand(userInput, userType);
-            return usersCommands;
+        Scanner scanner = new Scanner(System.in);
+        String userInput = scanner.nextLine();
+        if (userInput.matches("^.*help.*$")){
+        //regex to match help, and checks for help as a substring
+        //if (userInput.matches("(?i).*help.*")){
+            printCommands();
+            scanner.nextLine();
+        };
+        //while (userInput.isEmpty() && !(userInput.matches("^.*?(item1|item2|item3).*$"))){
+        while (userInput.isEmpty() && !(userInput.matches("^.*?(login|logout|create|delete|post|search|rent).*$"))){
+            System.out.println("Please input a valid command!");
+            userInput = scanner.nextLine();
         }
+        //once this is reached, a valid command has been entered
+        //determine what the command was, get the req input, return this input
+        //in the form of a space seperated list
+        System.out.println("Command given: " + userInput);
+        String usersCommands = determineCommand(userInput, userType);
+        return usersCommands;
+        
         }
     
     public void printCommands(){
@@ -127,7 +127,9 @@ public class Commandline {
         String listOfCommands = "";
         switch (commandGiven) {
             case "login":
-                listOfCommands = getLogin();
+                //listOfCommands = getLogin();
+                listOfCommands = "ERROR";
+                System.out.println("You are already logged in!");
                 break;
             case "logout":
                 listOfCommands = "logout";
@@ -139,7 +141,11 @@ public class Commandline {
                 System.out.println(userType);
                 if (userType.equals("AA")){
                     listOfCommands = getDelete();
-                } else {System.out.println("You must be an admin to issue this command!");}
+                } 
+                else {
+                    System.out.println("You must be an admin to issue this command!");
+                    listOfCommands = "ERROR";
+                }
                 break;
             case "post":
                 listOfCommands = getPost();
@@ -156,10 +162,10 @@ public class Commandline {
         return listOfCommands; 
     }
     //username
-    public String getLogin(){
-        String username = getGenericInput("Please enter a valid username:");
-        return "login " + username;
-    }
+    //public String getLogin(){
+    //    String username = getGenericInput("Please enter a valid username:");
+    //    return "login " + username;
+    //}
     //username, usertype
     public String getCreate(){
         String username = getGenericInput("Please enter a valid username:");
