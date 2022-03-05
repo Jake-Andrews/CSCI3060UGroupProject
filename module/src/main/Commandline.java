@@ -1,4 +1,7 @@
 package main;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 //class that handles all the command line dialogue with the user
 //handles sanitizing input
@@ -7,11 +10,82 @@ public class Commandline {
     
     public Commandline(){}
 
+    public String getUserType(String username){
+        //puts lines from useraccounts.txt into arraylist
+        ArrayList<String> fileContents = readFileIntoArrayList("useraccounts.txt");
+
+        //loop through the arraylist, find the username given, return their userType
+        for (String user: fileContents){
+            //remove two or more _ and replace with one _
+            String trimmed = user.trim().replaceAll("_{2,}", "_").trim();
+            //Since there are only one _ between words, split based on _ 
+            String[] line = trimmed.split("_");
+            for (String testing: line) {
+                System.out.println("TEST: " + testing);
+            }
+            System.out.println("0: " + line[0] + ", " + line[1]);
+            if (username.equals(line[0])) {
+                return line[1];
+            } 
+        }
+        return "";    
+    }
+
+    public Boolean isAdmin(String username){
+        //puts lines from useraccounts.txt into arraylist
+        ArrayList<String> fileContents = readFileIntoArrayList("useraccounts.txt");
+
+        //fileContents.forEach(line->System.out.println(line.split("_")[0]));
+
+        //loop through the arraylist, find the username given, check if they are an admin
+        for (String user: fileContents){
+            String[] line = user.split("_");
+            if (username.equals(line[0])) {
+                if ("AA".equals(line[1])) {
+                    return true; 
+                } 
+            } 
+        }
+        return false; 
+    }
+
+    public Boolean isUser(String username){
+        //puts lines from useraccounts.txt into arraylist
+        ArrayList<String> fileContents = readFileIntoArrayList("useraccounts.txt");
+
+        //fileContents.forEach(line->System.out.println(line.split("_")[0]));
+
+        //loop through the arraylist, see if the username given is a user
+        for (String user: fileContents){
+            String[] line = user.split("_");
+            //System.out.println("username given: " + username + ", file: " + line[0] + ",");
+            if (username.equals(line[0])) {
+                System.out.println("You have been logged in!");
+                return true; 
+            } 
+        }
+        return false; 
+    }
+
+    public ArrayList<String> readFileIntoArrayList(String filename) {
+        ArrayList<String> list = new ArrayList<String>();
+        try (Scanner s = new Scanner(new File(filename))) {
+            while (s.hasNext()){
+                list.add(s.next());
+            }
+            s.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     //Got bored with the regex
     //To do: Make sure the command we are returning is in the validcommands list. 
     //currently login123 would be returned instead of cropping 123 off and returning login
     //Could also just reject any user input that doesn't match (case insensitive) a command. 
-    public String getInput() {
+    public String getInput(String userType) {
         //Get user input, while loop to make sure input is not empty. Give help commands if they want them. 
         System.out.println("Please enter a command!\nFor a list of commands type (help)!");
         try (Scanner scanner = new Scanner(System.in)) {
@@ -30,7 +104,8 @@ public class Commandline {
             //once this is reached, a valid command has been entered
             //determine what the command was, get the req input, return this input
             //in the form of a space seperated list
-            String usersCommands = determineCommand(userInput);
+            System.out.println("Command given: " + userInput);
+            String usersCommands = determineCommand(userInput, userType);
             return usersCommands;
         }
         }
@@ -48,7 +123,7 @@ public class Commandline {
     }
     //determine what command was entered by the user
     //going to assume for now that the input was valid 
-    public String determineCommand(String commandGiven){
+    public String determineCommand(String commandGiven, String userType){
         String listOfCommands = "";
         switch (commandGiven) {
             case "login":
@@ -61,7 +136,10 @@ public class Commandline {
                 listOfCommands = getCreate();
                 break;
             case "delete":
-                listOfCommands = getDelete();
+                System.out.println(userType);
+                if (userType.equals("AA")){
+                    listOfCommands = getDelete();
+                } else {System.out.println("You must be an admin to issue this command!");}
                 break;
             case "post":
                 listOfCommands = getPost();
