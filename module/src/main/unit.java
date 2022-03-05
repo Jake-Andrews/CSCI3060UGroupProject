@@ -7,10 +7,14 @@ public class Unit {
     public Boolean rentFlag; 
 
     public Unit(String city, Float rentPrice, int bedrooms){
-
+        this.city = city; 
+        this.rentPrice = rentPrice; 
+        this.bedrooms = bedrooms; 
     }
 
-    public void setCity(String city){}
+    public void setCity(String city){
+        this.city = city; 
+    }
     public String getCity(){
         return city;
     }
