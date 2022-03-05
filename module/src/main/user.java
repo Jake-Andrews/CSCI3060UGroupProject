@@ -163,13 +163,22 @@ public class User {
                 delete(inputGiven[1]);
                 break;
             case "post":
-                post("",0.0f,1);
+                //city, rentprice, bedrooms
+                float rentprice = Float.parseFloat(inputGiven[1]);
+                int bedrooms = Integer.parseInt(inputGiven[2]);
+                post(inputGiven[0],rentprice,bedrooms);
                 break;
             case "search":
-                search("", 0.0f, 1);
+                //cutym rebtprice bedrooms
+                float rentprice1 = Float.parseFloat(inputGiven[1]);
+                int bedrooms1 = Integer.parseInt(inputGiven[2]);
+                search(inputGiven[0],rentprice1,bedrooms1);
                 break;
             case "rent":
-                rent(1,1);
+                //rentID, nights
+                int rentID = Integer.parseInt(inputGiven[1]);
+                int nights = Integer.parseInt(inputGiven[2]);
+                rent(rentID,nights);
                 break;
             default:
                 System.out.println("Invalid Input!");
