@@ -1,4 +1,6 @@
 package main;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -32,6 +34,15 @@ public class Main {
 
         //create a user with the info given
         User user = new User(userInput, command.getUserType(userInput));
+
+        //reads in the avaliable rental units file since the user has sucessfully logged in 
+        try {
+            Parser.readAvailableRentalsFile();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         //let them choose a command
         user.getCommands();
     }
