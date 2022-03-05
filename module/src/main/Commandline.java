@@ -23,7 +23,7 @@ public class Commandline {
             //for (String testing: line) {
             //    System.out.println("TEST: " + testing);
             //}
-            System.out.println("0: " + line[0] + ", " + line[1]);
+            //System.out.println("0: " + line[0] + ", " + line[1]);
             if (username.equals(line[0])) {
                 return line[1];
             } 
@@ -135,18 +135,25 @@ public class Commandline {
                 listOfCommands = "logout";
                 break;
             case "create":
-                listOfCommands = getCreate();
-                break;
-            case "delete":
-                System.out.println(userType);
                 if (userType.equals("AA")){
-                    listOfCommands = getDelete();
+                  listOfCommands = getCreate();
+                  break;
                 } 
                 else {
                     System.out.println("You must be an admin to issue this command!");
                     listOfCommands = "ERROR";
+                    break;
                 }
-                break;
+            case "delete":
+                if (userType.equals("AA")){
+                    listOfCommands = getDelete();
+                    break;
+                } 
+                else {
+                    System.out.println("You must be an admin to issue this command!");
+                    listOfCommands = "ERROR";
+                    break;
+                }
             case "post":
                 listOfCommands = getPost();
                 break;
