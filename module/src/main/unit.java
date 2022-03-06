@@ -11,12 +11,12 @@ public class Unit {
     private boolean rentalFlag;  
     private int numberOfNightsRemanining; 
 
-    public Unit(String rentID, String username, String city, float rentalPricePerNight, int numberOfBedrooms, String rentalFlag, int numberOfNightsRemanining) {
+    public Unit(String rentID, String username, String city, int numberOfBedrooms, float rentalPricePerNight, String rentalFlag, int numberOfNightsRemanining) {
         this.rentID = rentID; 
         this.username = username;
         this.city = city;
+        this.numberOfBedrooms = numberOfBedrooms;
         this.rentalPricePerNight = rentalPricePerNight; 
-        this.numberOfBedrooms = numberOfBedrooms; 
         this.rentalFlag = Boolean.valueOf(rentalFlag);
         this.numberOfNightsRemanining = numberOfNightsRemanining;
     }
@@ -24,14 +24,14 @@ public class Unit {
     public String getRentID()       { return this.rentID; }
     public String getUserName()     { return this.username; }
     public String getCity()         { return this.city; }
-    public float getRentalPrice()   { return this.rentalPricePerNight; }
     public int getNumBedrooms()     { return this.numberOfBedrooms; }
+    public float getRentalPrice()   { return this.rentalPricePerNight; }
     public boolean getRentalFlag()  { return this.rentalFlag; }
     public int getNumNights()       { return this.numberOfNightsRemanining; }
 
     @Override
     public String toString() {
-        return String.format("rentID: %s\r\nUsername: %s\r\nCity: %s\r\nrentalPricePerNight: %.2f\r\nnumberOfBedrooms: %d\r\nrentalFlag: %s\r\nnumberOfNightsRemaining: %d\r\n", 
-        this.rentID, this.username, this.city, this.rentalPricePerNight, this.numberOfBedrooms, this.rentalFlag, this.numberOfNightsRemanining);
+        return String.format("rentID: %s\r\nUsername: %s\r\nCity: %s\r\nnumberOfBedrooms: %d\r\nrentalPricePerNight: %.2f\r\nrentalFlag: %s\r\nnumberOfNightsRemaining: %d\r\n", 
+        this.rentID, this.username, this.city, this.numberOfBedrooms, this.rentalPricePerNight, this.rentalFlag, this.numberOfNightsRemanining);
     }
 }

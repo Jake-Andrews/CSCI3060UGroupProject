@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.UUID;
 
 //The user class is created after a user logs in
@@ -21,10 +22,8 @@ import java.util.UUID;
 public class User {
     public String userType;
     public String username;
-    public String password;
     public boolean loggedIn; 
-    public Unit[] unitsRented; 
-    public String dailyTransactions; 
+    public ArrayList<String> dailyTransactions1 = new ArrayList<String>();
     public CommandLine test = new CommandLine();
 
     public User(String username, String userType){
@@ -42,8 +41,7 @@ public class User {
         //All the validating of input, etc... will be done in Commandline, user only deals with sanitized input. 
         String inputCommand = "";
         while(!inputCommand.equals("logout")) {
-            //If the user tries to delete but isn't an admin, ask for another command
-            inputCommand = test.recieveTransaction(this.userType);
+            inputCommand = test.recieveTransaction();
 
             switch (inputCommand) {
                 case "login":
@@ -52,6 +50,10 @@ public class User {
     
                 case "logout":
                     this.loggedIn = false;
+                    System.out.println("\nPrinting Daily Transactions:");
+                    for (String transaction: dailyTransactions1) {
+                        System.out.println(transaction);
+                    }
                     break;
     
                 case "create":
@@ -109,16 +111,20 @@ public class User {
         // Get a username for the new account
         do {
             newUsername = test.getGenericInput("\nPlease enter a valid username: ");
-        } while (newUsername.length() > 15 || newUsername.matches("@|#|$|%|^|&|*"));        // Username is limited to at most 15 characters and cannot be special characters
+        } while (newUsername.length() > 15 || newUsername.matches("[@|#|$|%|^|&|*]"));        // Username is limited to at most 15 characters and cannot be special characters
 
         // Get a user type for the new account
         do {
-            newUsertype = test.getGenericInput("\nPlease enter a valid usertype: ");
+            newUsertype = test.getGenericInput("Please enter a valid usertype: ");
         } while (!(newUsertype.matches("AA|FS|RS|PS")));                                    // User type must be an accepted type
 
         System.out.println("Creating the user: " + newUsername + " with a usertype of: " + newUsertype);
         writeToAccountsFile(newUsername, newUsertype);
         System.out.println("User created!");
+
+        //Unit(String rentID, String username, String city, float rentalPricePerNight, int numberOfBedrooms, String rentalFlag, int numberOfNightsRemanining)
+        Unit unit = new Unit("", "", "", 000000, 0, "", 00);
+        addToTransactionArrayList("01", unit);
     }
 
 
@@ -148,6 +154,9 @@ public class User {
 
             } else { System.out.println("ERROR: You cannot delete your own account!"); }
         } while (!doneDeleting);
+
+        Unit unit = new Unit("", "", "", 000000, 0, "", 00);
+        addToTransactionArrayList("02", unit);
     }
 
     public Unit post() {
@@ -175,11 +184,13 @@ public class User {
         
         System.out.println("Creating unit now!");
         String unitID = generateUnitID();
-        Unit newUnit = new Unit(unitID, this.username, city, rentPrice, bedrooms, "false", 0);
+        Unit newUnit = new Unit(unitID, this.username, city, bedrooms,  rentPrice, "false", 0);
 
         writeToRentalsFile(newUnit);
 
-        //TODO: save information to daily transaction file                           
+        // Add the new posted unit to the list of daily transactions
+        addToTransactionArrayList("03", newUnit);
+
         return newUnit; 
     }
 
@@ -211,6 +222,9 @@ public class User {
         for (Unit rental: Parser.rentals){
             if (rental.getCity().equals(city) && rental.getRentalPrice() <= rentPrice && rental.getNumBedrooms() >= bedrooms && !(rental.getRentalFlag())) {
                 System.out.println(rental);
+
+                // Add each queried unit to the list of daily transactions
+                addToTransactionArrayList("04", rental);
             }
         }   
     }
@@ -234,7 +248,7 @@ public class User {
         int totalCost = nights * Math.round(rental.getRentalPrice());
         
         dfrmt.format(totalCost);
-        String confirmation = test.getGenericInput("Are you sure you want to book " + rentID + " at a total cost of $" + totalCost + "?\nType 'yes' to accept or 'no' to decline:");
+        String confirmation = test.getGenericInput("Are you sure you want to book " + rentID + " at a total cost of $" + totalCost + "?\nType 'yes' to accept or 'no' to decline: ");
     
         //The user wants the rental, change rental flag and remaining nights
         if (confirmation.equalsIgnoreCase("yes")) {
@@ -248,6 +262,9 @@ public class User {
         } else {
             System.out.println("Order has been cancelled.");
         }
+
+        // Add to the list of daily transactions after renting a unit
+        addToTransactionArrayList("05", rental);
     }  
 
     public void writeToAccountsFile(String newUsername, String newUserType){
@@ -255,7 +272,7 @@ public class User {
         //string needs to be 15 units long, subtract 2 for usertype.
         //Therefore, take length of username and subtract from 13 for the number of _ needed
         String toWriteToFile = newUsername;
-        int underscoresNeeded = 13 - newUsername.length();
+        int underscoresNeeded = 17 - newUsername.length();
         
         for (int i = 0; i < underscoresNeeded; i ++){
             toWriteToFile = toWriteToFile + "_";
@@ -320,12 +337,12 @@ public class User {
             toWriteToFile += "_";
         }
 
+        toWriteToFile += newUnit.getNumBedrooms() + "__";
+
         toWriteToFile += newUnit.getRentalPrice();
         for (int i = 0; i < (8 - (String.valueOf(newUnit.getRentalPrice())).length()); i++) {
             toWriteToFile += "_";
         }
-
-        toWriteToFile += newUnit.getNumBedrooms() + "__";
 
         toWriteToFile += newUnit.getRentalFlag();
         for (int i = 0; i < (7 - String.valueOf(newUnit.getRentalFlag()).length()); i ++) {
@@ -362,6 +379,37 @@ public class User {
             }
         }  
         return null;
+    }
+
+    private void addToTransactionArrayList(String command, Unit unit) {
+        //01-create, 02-delete, 03-post, 04-search, 05-rent, 00-end of session
+        String toWriteToFile = command + "_";
+
+        toWriteToFile += this.username;
+        for (int i = 0; i < (17 - this.username.length()); i ++) {
+            toWriteToFile += "_";
+        }
+
+        toWriteToFile += this.userType + "__";
+
+        toWriteToFile += unit.getRentID() + "__";
+
+        toWriteToFile += unit.getCity();
+        for (int i = 0; i < (27 - unit.getCity().length()); i ++) {
+            toWriteToFile += "_";
+        }
+
+        toWriteToFile += Integer.toString(unit.getNumBedrooms()) + "__";
+
+        toWriteToFile += unit.getRentalPrice();
+        for (int i = 0; i < (8 - (String.valueOf(unit.getRentalPrice())).length()); i++) {
+            toWriteToFile += "_";
+        }
+
+        toWriteToFile += Integer.toString(unit.getNumNights());
+
+        System.out.println("Daily transaction file string: " + toWriteToFile);
+        dailyTransactions1.add(toWriteToFile);
     }
 
 

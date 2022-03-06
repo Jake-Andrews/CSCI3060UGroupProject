@@ -30,12 +30,12 @@ public class Parser {
             String rentID = splitLine[0];
             String username = splitLine[1];
             String city = splitLine[2];
-            float rentalPricePerNight = Float.parseFloat(splitLine[3]);
-            int numberOfBedrooms = Integer.parseInt(splitLine[4]);
+            int numberOfBedrooms = Integer.parseInt(splitLine[3]);
+            float rentalPricePerNight = Float.parseFloat(splitLine[4]);
             String rentalFlag = splitLine[5];
             int numberOfNightsRemanining = Integer.parseInt(splitLine[6]);
 
-            Unit rental = new Unit(rentID, username, city, rentalPricePerNight, numberOfBedrooms, rentalFlag, numberOfNightsRemanining);
+            Unit rental = new Unit(rentID, username, city, numberOfBedrooms, rentalPricePerNight, rentalFlag, numberOfNightsRemanining);
             rentals.add(rental);
         }
     }
@@ -92,8 +92,8 @@ public class Parser {
             String fileRentID = line[0];
             String username = line[1];
             String city = line[2];
-            String rentalPricePerNight = line[3];
-            String numberOfBedrooms = line[4];
+            String numberOfBedrooms = line[3];
+            String rentalPricePerNight = line[4];
             String rentalFlag = line[5];
             String numberOfNightsRemaining = line[6];
 
@@ -107,11 +107,12 @@ public class Parser {
                 for (int i = 0; i < (27 - city.length()); i ++) {
                     lineToWrite += "_";
                 }
+                lineToWrite += numberOfBedrooms + "__";
                 lineToWrite += rentalPricePerNight;
                 for (int i = 0; i < (8 - rentalPricePerNight.length()); i++) {
                     lineToWrite += "_";
                 }
-                lineToWrite += numberOfBedrooms + "__true___" + nights;
+                lineToWrite += "true___" + nights;
 
                 System.out.println(lineToWrite);
                 lines.add(lineToWrite);
@@ -126,11 +127,11 @@ public class Parser {
                 for (int i = 0; i < (27 - city.length()); i ++) {
                     lineToWrite += "_";
                 }
+                lineToWrite += numberOfBedrooms + "__";
                 lineToWrite += rentalPricePerNight;
                 for (int i = 0; i < (8 - rentalPricePerNight.length()); i++) {
                     lineToWrite += "_";
                 }
-                lineToWrite += numberOfBedrooms + "__";
                 lineToWrite += rentalFlag;
                 for (int i = 0; i < (7 - rentalFlag.length()); i ++) {
                     lineToWrite += "_";

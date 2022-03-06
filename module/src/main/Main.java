@@ -46,7 +46,6 @@ public class Main {
 
             //let them choose a command
             user.takeTransactions();
-            scanner.close();
         }
     }
 }

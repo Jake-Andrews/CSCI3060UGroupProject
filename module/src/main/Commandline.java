@@ -72,11 +72,12 @@ public class CommandLine {
     //To do: Make sure the command we are returning is in the validcommands list. 
     //currently login123 would be returned instead of cropping 123 off and returning login
     //Could also just reject any user input that doesn't match (case insensitive) a command. 
-    public String recieveTransaction(String userType) {
+    public String recieveTransaction() {
         //Get user input, while loop to make sure input is not empty. Give help commands if they want them. 
         System.out.println("\nPlease enter a command!\nFor a list of commands type 'help'");
         Scanner scanner = new Scanner(System.in);
-        String userInput = scanner.nextLine();
+        String userInput = "";
+        userInput = scanner.nextLine();
         if (userInput.matches("^.*help.*$")){
         //regex to match help, and checks for help as a substring
         //if (userInput.matches("(?i).*help.*")){
