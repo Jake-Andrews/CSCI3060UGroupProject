@@ -23,6 +23,5 @@ public class Renting {
     public String toString() {
         return String.format("rentID: %s\r\nUsername: %s\r\nCity: %s\r\nnumberOfBedrooms: %d\r\nrentalPricePerNight: %f\r\nrentalFlag: %s\r\numberOfNightsRemaining: %d\r\n", 
         this.rentID, this.username, this.city, this.numberOfBedrooms, this.rentalPricePerNight, this.rentalFlag, this.numberOfNightsRemanining);
+    }
 }
-}
-

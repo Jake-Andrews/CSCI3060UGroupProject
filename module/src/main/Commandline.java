@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 //class that handles all the command line dialogue with the user
 //handles sanitizing input
-public class Commandline {
-    public static String[] validCommands = {"login", "logout", "create", "delete", "post", "search", "rent"};
+public class CommandLine {
+    public static String[] validCommands = {"logout", "create", "delete", "post", "search", "rent"};
     
-    public Commandline(){}
+    public CommandLine(){}
 
     public String getUserType(String username){
         //puts lines from useraccounts.txt into arraylist
@@ -87,7 +87,7 @@ public class Commandline {
     //Could also just reject any user input that doesn't match (case insensitive) a command. 
     public String getInput(String userType) {
         //Get user input, while loop to make sure input is not empty. Give help commands if they want them. 
-        System.out.println("Please enter a command!\nFor a list of commands type (help)!");
+        System.out.println("\nPlease enter a command!\nFor a list of commands type 'help'");
         Scanner scanner = new Scanner(System.in);
         String userInput = scanner.nextLine();
         if (userInput.matches("^.*help.*$")){
@@ -96,7 +96,9 @@ public class Commandline {
             printCommands();
             scanner.nextLine();
         };
-        //while (userInput.isEmpty() && !(userInput.matches("^.*?(item1|item2|item3).*$"))){
+
+        //take input from a user until user provides a valid command
+        userInput.toLowerCase();
         while (userInput.isEmpty() && !(userInput.matches("^.*?(login|logout|create|delete|post|search|rent).*$"))){
             System.out.println("Please input a valid command!");
             userInput = scanner.nextLine();
@@ -104,105 +106,17 @@ public class Commandline {
         //once this is reached, a valid command has been entered
         //determine what the command was, get the req input, return this input
         //in the form of a space seperated list
-        System.out.println("Command given: " + userInput);
-        String usersCommands = determineCommand(userInput, userType);
-        return usersCommands;
-        
-        }
+        System.out.println("\nCommand given: " + userInput);
+        return userInput;
+    }
     
+    //'help' command- print out valid commands for the user to take
     public void printCommands(){
-        System.out.println("Printing a list of valid commands:");
+        System.out.println("\nPrinting a list of valid commands:");
         for (String command: validCommands){
             System.out.println(command);
         }
-        System.out.println("Please enter a command!");
-    }
-
-    public String getCommand(String command){
-        return "";
-    }
-    //determine what command was entered by the user
-    //going to assume for now that the input was valid 
-    public String determineCommand(String commandGiven, String userType){
-        String listOfCommands = "";
-        switch (commandGiven) {
-            case "login":
-                //listOfCommands = getLogin();
-                listOfCommands = "ERROR";
-                System.out.println("You are already logged in!");
-                break;
-            case "logout":
-                listOfCommands = "logout";
-                break;
-            case "create":
-                if (userType.equals("AA")){
-                  listOfCommands = getCreate();
-                  break;
-                } 
-                else {
-                    System.out.println("You must be an admin to issue this command!");
-                    listOfCommands = "ERROR";
-                    break;
-                }
-            case "delete":
-                if (userType.equals("AA")){
-                    listOfCommands = getDelete();
-                    break;
-                } 
-                else {
-                    System.out.println("You must be an admin to issue this command!");
-                    listOfCommands = "ERROR";
-                    break;
-                }
-            case "post":
-                listOfCommands = getPost();
-                break;
-            case "search":
-                listOfCommands = getSearch();
-                break;
-            case "rent":
-                listOfCommands = getRent();
-                break;
-            default:
-                System.out.println("Invalid Input!");
-        }
-        return listOfCommands; 
-    }
-    //username
-    //public String getLogin(){
-    //    String username = getGenericInput("Please enter a valid username:");
-    //    return "login " + username;
-    //}
-    //username, usertype
-    public String getCreate(){
-        String username = getGenericInput("Please enter a valid username:");
-        String usertype = getGenericInput("Please enter a valid usertype");
-        return "create " + username + " " + usertype;
-    }
-    //username
-    public String getDelete(){
-        String username = getGenericInput("Please enter a valid username:");
-        return "delete " + username;
-    }
-    //city, rentPrice, bedrooms
-    public String getPost(){
-        String city = getGenericInput("Please enter a valid city:");
-        String rentPrice = getGenericInput("Please enter a valid rentPrice:");
-        String bedrooms = getGenericInput("Please enter a valid bedrooms:");
-        return "post " + city + " " + rentPrice + " " + bedrooms;
-    }
-    //city, rentprice, bedrooms
-    public String getSearch(){
-        String city = getGenericInput("Please enter a valid city:");
-        String rentPrice = getGenericInput("Please enter a valid rentPrice:");
-        String bedrooms = getGenericInput("Please enter a valid bedrooms:");
-        return "search " + city + " " + rentPrice + " " + bedrooms;
-    }
-    //rentID, nights
-    public String getRent(){
-        String rentID = getGenericInput("Please enter a valid rentID:");
-        String nights = getGenericInput("Please enter a valid nights");
-        return "rent " + rentID + " " + nights;
+        System.out.println("\nPlease enter a command!");
     }
 
     //Used to get input from a user

@@ -1,10 +1,10 @@
 package main;
 
 public class Unit {
-    public String city; 
-    public Float rentPrice; 
-    public int bedrooms; 
-    public Boolean rentFlag; 
+    private String city; 
+    private Float rentPrice; 
+    private int bedrooms; 
+    private Boolean rentFlag; 
 
     public Unit(String city, Float rentPrice, int bedrooms){
         this.city = city; 

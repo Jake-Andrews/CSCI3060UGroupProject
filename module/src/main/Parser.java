@@ -24,13 +24,11 @@ public class Parser {
             String rentID = line[0];
             String username = line[1];
             String city = line[2];
-            int numberOfBedrooms = Integer.parseInt(line[3]);
-            float rentalPricePerNight = Float.parseFloat(line[4]);
-            String rentalFlag = line[5];
-            int numberOfNightsRemanining = Integer.parseInt(line[6]);
+            float rentalPricePerNight = Float.parseFloat(line[3]);
+            int numberOfBedrooms = Integer.parseInt(line[4]);
 
-            Renting rental = new Renting(rentID, username, city, numberOfBedrooms, rentalPricePerNight, rentalFlag, numberOfNightsRemanining);
-            rentals.add(rental);
+            //Renting rental = new Renting(rentID, username, city, numberOfBedrooms, rentalPricePerNight);
+            //rentals.add(rental);
         }
 
         //Scanner input = new Scanner(new File("availablerentalsfile.txt"));
@@ -50,9 +48,6 @@ public class Parser {
             rentals.add(rental);
         }
         */
-        for (Renting rental : rentals){
-            System.out.println(rental);
-        }
     }
 
     public static ArrayList<String> readFileIntoArrayList(String filename) {

@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class FrontEnd {
     /*
     Prevent user from issuing commands without being logged in
     Check the users rank before issuing certain commands
@@ -11,26 +11,19 @@ public class Main {
     */
     public static void main(String[] args) {
         //gets user to type login, type username, then create user class that will handle the rest
-
-        while(true) {
-
-        //get the user to type login
         Scanner sc = new Scanner(System.in);
         String userInput = "";
         do {
-            System.out.print("Welcome, please login to use the program. \nTo start type login:");
+            System.out.print("Welcome, please login to use the program. \nTo start type login: ");
             userInput = sc.nextLine();
-        }
-        while (!userInput.equalsIgnoreCase("login"));
+        } while (!userInput.equalsIgnoreCase("login"));
 
         //get the user's username
-        userInput = "";
-        Commandline command = new Commandline();
+        CommandLine command = new CommandLine();
         do {
-            System.out.print("Please enter a valid username:");
+            System.out.print("Please enter a valid username: ");
             userInput = sc.nextLine();
-        }
-        while (!command.isUser(userInput));//sent to a method to check if the username is in the user accounts file, probably need a new class for this? filehandler class or something.
+        } while (!command.isUser(userInput)); //sent to a method to check if the username is in the user accounts file, probably need a new class for this? filehandler class or something.
 
         //create a user with the info given
         User user = new User(userInput, command.getUserType(userInput));
@@ -43,9 +36,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        //let them choose a command
-        user.getCommands();
-    }
-
+        //take a command from the user
+        user.takeCommands();
     }
 }
