@@ -1,17 +1,12 @@
 package main;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    /*
-    Prevent user from issuing commands without being logged in
-    Check the users rank before issuing certain commands
-    Add functionality to commands
-    */
+        //one large while loop to constantly accept input and commands from the user.
+        //gets user to type login, then type their username, validates that the usernameis in the useraccounts.txt file
+        //then create user class and calls user.getcommands() to accept commands from the user until they type logout
     public static void main(String[] args) {
-        //gets user to type login, type username, then create user class that will handle the rest
-
         while(true) {
 
         //get the user to type login
@@ -23,14 +18,23 @@ public class Main {
         }
         while (!userInput.equalsIgnoreCase("login"));
 
-        //get the user's username
+        //reads in the useraccounts file
+        try {
+            Parser.readUserAccountsFile();
+        } catch (FileNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+        //get the user's username and validate it 
         userInput = "";
         Commandline command = new Commandline();
         do {
             System.out.print("Please enter a valid username:");
             userInput = sc.nextLine();
         }
-        while (!command.isUser(userInput));//sent to a method to check if the username is in the user accounts file, probably need a new class for this? filehandler class or something.
+        //keep asking for a valid username while the username given is not a username in the useraccounts.txt file
+        while (!command.isUser(userInput));
 
         //create a user with the info given
         User user = new User(userInput, command.getUserType(userInput));

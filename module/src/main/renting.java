@@ -1,5 +1,7 @@
 package main;
 
+//class used to respresent a renting unit
+//holds the various data about a rental, override the toString for testing purposes and in User class in the search method
 public class Renting {
     public String rentID; 
     public String username;
@@ -21,8 +23,7 @@ public class Renting {
 
     @Override
     public String toString() {
-        return String.format("rentID: %s\r\nUsername: %s\r\nCity: %s\r\nnumberOfBedrooms: %d\r\nrentalPricePerNight: %f\r\nrentalFlag: %s\r\numberOfNightsRemaining: %d\r\n", 
+        return String.format("rentID: %s\r\nUsername: %s\r\nCity: %s\r\nnumberOfBedrooms: %d\r\nrentalPricePerNight: %.2f\r\nrentalFlag: %s\r\nnumberOfNightsRemaining: %d\r\n", 
         this.rentID, this.username, this.city, this.numberOfBedrooms, this.rentalPricePerNight, this.rentalFlag, this.numberOfNightsRemanining);
 }
 }
-

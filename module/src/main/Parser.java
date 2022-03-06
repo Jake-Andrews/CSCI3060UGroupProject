@@ -5,8 +5,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//The parser class is used to read the availablerentalsfile.txt and userraccounts.txt files
+//into arraylists that can be accessed from other classes
 public class Parser {
     public static ArrayList<Renting> rentals = new ArrayList<Renting>(); 
+    public static ArrayList<User> users = new ArrayList<User>();
 
     public static void readAvailableRentalsFile() throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
@@ -18,9 +21,6 @@ public class Parser {
             //Since there are only one _ between words, split based on _ 
             String[] line = trimmed.split("_");
 
-            //for (String tes : line){
-            //    System.out.println(tes);
-            //}
             String rentID = line[0];
             String username = line[1];
             String city = line[2];
@@ -33,26 +33,31 @@ public class Parser {
             rentals.add(rental);
         }
 
-        //Scanner input = new Scanner(new File("availablerentalsfile.txt"));
-        //input.useDelimiter("_|\n");
-        //int rentID int nights Boolean rentFlag
-        /*
-        while (input.hasNext()){
-            String rentID = input.next();
-            String username = input.next();
-            String city = input.next();
-            int numberOfBedrooms = input.nextInt();
-            float rentalPricePerNight = input.nextFloat();
-            String rentalFlag = input.next();
-            int numberOfNightsRemanining = input.nextInt();
+        //for (Renting rental : rentals){
+        //    System.out.println(rental);
+        //}
+    }
 
-            Renting rental = new Renting(rentID, username, city, numberOfBedrooms, rentalPricePerNight, rentalFlag, numberOfNightsRemanining);
-            rentals.add(rental);
+    public static void readUserAccountsFile() throws FileNotFoundException{
+        //puts lines from useraccounts.txt into arraylist
+        ArrayList<String> fileContents = readFileIntoArrayList("useraccounts.txt");
+
+        for (String line: fileContents){
+            //remove two or more _ and replace with one _
+            String trimmed = line.trim().replaceAll("_{2,}", "_").trim();
+            //Since there are only one _ between words, split based on _ 
+            String[] splitLine = trimmed.split("_");
+
+            String username = splitLine[0];
+            String userType = splitLine[1];
+
+            User user = new User(username, userType);
+            users.add(user);
         }
-        */
-        for (Renting rental : rentals){
-            System.out.println(rental);
-        }
+
+        //for (User user : users){
+        //    System.out.println(user);
+        //}
     }
 
     public static ArrayList<String> readFileIntoArrayList(String filename) {
