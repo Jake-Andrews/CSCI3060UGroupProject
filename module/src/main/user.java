@@ -8,8 +8,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.SecureRandom;
-import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.util.UUID;
 
 //The user class is created after a user logs in
 //From Main.java, once a user is created, user.getCommands() is envoked
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 //The getCommands() class delegates reading the inputs to the Commandline class which is called from 
 //test.getInput(). This class doesn't get any input from the user, it recieves all of it from methods in commandline
 //This class deals with reciving input and doing stuff based on the input and command recieved (writingb to a file, deleting from file, logging out)
- 
+
 public class User {
     public String userType;
     public String username;
@@ -25,72 +25,230 @@ public class User {
     public boolean loggedIn; 
     public Unit[] unitsRented; 
     public String dailyTransactions; 
-    public Commandline test = new Commandline();
+    public CommandLine test = new CommandLine();
 
     public User(String username, String userType){
         this.username = username; 
         this.userType = userType; 
     }
+
     //When a user logs in, the method is run and accepts user input and 
     //invokes other methods in this class depending on the input until the user quits
-    public void getCommands(){
+    public void takeTransactions(){
         //Commandline.getInput will return a string
         //Split the string based on spaces. The first word will determine which function 
         //Gets called in User (logout, etc...). Then the other words are used to complete the function
         //This removes all the commandline/userinput to its own class and cleans up the User class
         //All the validating of input, etc... will be done in Commandline, user only deals with sanitized input. 
-        //The string will be split on spaces and the first string thrown to a switch statment (fn callCommand)
         String inputCommand = "";
         while(!inputCommand.equals("logout")) {
             //If the user tries to delete but isn't an admin, ask for another command
-            inputCommand = test.getInput(this.userType);
+            inputCommand = test.recieveTransaction(this.userType);
 
-            if (inputCommand.equals("ERROR")) {
-                continue; 
+            switch (inputCommand) {
+                case "login":
+                    System.out.println("ERROR: You are already logged in!");
+                    break;
+    
+                case "logout":
+                    this.loggedIn = false;
+                    break;
+    
+                case "create":
+                    if (this.userType.equals("AA")) {
+                        create();
+                        break;
+                    } else {
+                        System.out.println("ERROR: You must be an admin to issue this command!");
+                        break;
+                    }
+    
+                case "delete":
+                    if (this.userType.equals("AA")) {
+                        delete();
+                        break;
+                    } else {
+                        System.out.println("ERROR: You must be an admin to issue this command!");
+                        break;
+                    }
+    
+                case "post":
+                    if (!this.userType.equals("RS")) {
+                        post().toString();
+                        break;
+                    } else {
+                        System.out.println("ERROR: You cannot post a unit on a rent-standard account!");
+                        break;
+                    }
+    
+                case "search":
+                    search();
+                    break;
+    
+                case "rent":
+                if (!this.userType.equals("PS")) {
+                    rent();
+                    break;
+                } else {
+                    System.out.println("ERROR: You cannot post a unit on a post-standard account!");
+                    break;
+                }
+    
+                default:
+                    System.out.println("Invalid Input!");
             }
-            else if (inputCommand.equals("logout")){
-                break;
-            }
-
-            String[] commandsSplit = inputCommand.split("\\s+");
-
-            //for (String input : commandsSplit) {
-            //    System.out.println("Testing: Command Recieved: " + input);
-            //}
-            //[0] contains "logout" or "delete", etc... Rest are the necessary inputs (rentID, username, etc...)
-            callCommand(commandsSplit[0], commandsSplit);
         }
         System.out.println("You have been successfully logged out!"); 
     }
 
-    //The newusername and usertype havent been validated. username could be more than 15 char and usetype could be some random chars
-    public void create(String newUsername, String newUsertype){
-        System.out.println("Create the user: " + newUsername + " with a usertype of: " + newUsertype);
+    // Transactions
+    public void create() {
+        String newUsername;
+        String newUsertype;
+
+        // Get a username for the new account
+        do {
+            newUsername = test.getGenericInput("\nPlease enter a valid username: ");
+        } while (newUsername.length() > 15 || newUsername.matches("@|#|$|%|^|&|*"));        // Username is limited to at most 15 characters and cannot be special characters
+
+        // Get a user type for the new account
+        do {
+            newUsertype = test.getGenericInput("\nPlease enter a valid usertype: ");
+        } while (!(newUsertype.matches("AA|FS|RS|PS")));                                    // User type must be an accepted type
+
+        System.out.println("Creating the user: " + newUsername + " with a usertype of: " + newUsertype);
         writeToAccountsFile(newUsername, newUsertype);
+        System.out.println("User created!");
     }
 
-    //The commandline method already checked if the user was an admin, just make sure the user
-    //isn't deleting their own account or check if the user exists
-    public void delete(String username){
-        
-        System.out.println("Checking if the user exists... ");
-        if (test.isUser(username)){
-            System.out.println("The user: " + username + " exists in our system!");
-        }
 
-        System.out.println("Checking to make sure you don't delete your own account...");
-        if (!username.equals(this.username)){
-            System.out.println("Deleting user: " + username);
-            try {
-                deleteFromFile(username);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+    public void delete() {
+        String deletingUsername;
+        Boolean doneDeleting = false;
+
+        do {
+            deletingUsername = test.getGenericInput("\nPlease enter a valid username: ");
+            System.out.println("Checking if the user exists... ");
+
+            // Get user account to be deleted by using username
+            if (test.isUser(username)){
+                System.out.println("The user: " + deletingUsername + " exists in our system!");
             }
 
-        }
-        else {System.out.println("Error, you cannot delete yourself!");}
+            // Prevent user from deleting current user's account
+            if (!username.equals(this.username)) {
+                System.out.println("Deleting user: " + username);
+                doneDeleting = true;
+                try {
+                    deleteFromAccountsFile(username);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            } else { System.out.println("ERROR: You cannot delete your own account!"); }
+        } while (!doneDeleting);
     }
+
+    public Unit post() {
+        String city;
+        float rentPrice;
+        int bedrooms;
+        DecimalFormat dfrmt = new DecimalFormat();
+        dfrmt.setMaximumFractionDigits(2);
+
+        // Get a city name from user
+        do {
+            city = test.getGenericInput("Please enter the city where the unit you are renting is: ");
+            city.toLowerCase();
+        } while (!(city.matches("[a-zA-Z[-\\s]]+") || city.length() > 25));                 // City must have only letters from the alphabet (no numbers or special characters)
+        city = city.substring(0, 1).toUpperCase() + city.substring(1);                      // Capatize first letter of cities
+        // Get a renting price from user
+        do {
+            rentPrice = Float.parseFloat(test.getGenericInput("Please enter a valid price to rent the unit at (max is 999.99): "));
+            dfrmt.format(rentPrice);
+        } while (rentPrice < 0.01 || rentPrice > 999.99);                                   // Rent price must be above 0 and less than the maximum
+        // Get a number of bedrooms from user
+        do {
+            bedrooms = Integer.parseInt(test.getGenericInput("Please enter the number of bedrooms (max is 9): "));
+        } while (bedrooms < 1 || bedrooms > 9);                                             // Rent price must be above 0 and less than the maximum
+        
+        System.out.println("Creating unit now!");
+        String unitID = generateUnitID();
+        Unit newUnit = new Unit(unitID, this.username, city, rentPrice, bedrooms, "false", 0);
+
+        writeToRentalsFile(newUnit);
+
+        //TODO: save information to daily transaction file                           
+        return newUnit; 
+    }
+
+    //Read through availablerentalsfile.txt, then output every rentals that fits the req
+    public void search() {
+        String city;
+        Float rentPrice;
+        int bedrooms;
+        DecimalFormat dfrmt = new DecimalFormat();
+        dfrmt.setMaximumFractionDigits(2);
+
+        do {
+            city = test.getGenericInput("Please enter the city where the unit you are renting is: ");
+            city.toLowerCase();
+        } while (!(city.matches("[a-zA-Z[-\\s]]+") || city.length() > 25));                 // City must have only letters from the alphabet (no numbers or special characters)
+        city = city.substring(0, 1).toUpperCase() + city.substring(1);                      // Capatize first letter of cities, since search is case sensitive
+        
+        do {
+            rentPrice = Float.parseFloat(test.getGenericInput("Please enter a valid price to rent the unit at (max is 999.99): "));
+            dfrmt.format(rentPrice);
+        } while (rentPrice < 0.01 || rentPrice > 999.99);                                   // Rent price must be above 0 and less than the maximum
+        // Get a number of bedrooms from user
+        do {
+            bedrooms = Integer.parseInt(test.getGenericInput("Please enter the number of bedrooms (max is 9): "));
+        } while (bedrooms < 1 || bedrooms > 9);                                             // Rent price must be above 0 and less than the maximum
+
+        //loop through the available Unit stored in Parser class
+        //the units stored there will not included units added this session as per post requirement
+        for (Unit rental: Parser.rentals){
+            if (rental.getCity().equals(city) && rental.getRentalPrice() <= rentPrice && rental.getNumBedrooms() >= bedrooms && !(rental.getRentalFlag())) {
+                System.out.println(rental);
+            }
+        }   
+    }
+
+    public void rent() {
+        String rentID;
+        int nights;
+        Unit rental;
+        DecimalFormat dfrmt = new DecimalFormat();
+        dfrmt.setMaximumFractionDigits(2);
+
+        do {
+            rentID = test.getGenericInput("Please enter the id of the unit you wish to rent: ");
+            rental = rentalExists(rentID);
+        } while (rental == null);                                                           // Rent ID must be an available unit (existing ID and is currently not being rented)
+
+        do {
+            nights = Integer.parseInt(test.getGenericInput("Please enter a valid number of nights (max is 14):"));
+        } while (nights < 0 || nights > 14);                                                // Number of nights must be above 0 and less than the maximum
+
+        int totalCost = nights * Math.round(rental.getRentalPrice());
+        
+        dfrmt.format(totalCost);
+        String confirmation = test.getGenericInput("Are you sure you want to book " + rentID + " at a total cost of $" + totalCost + "?\nType 'yes' to accept or 'no' to decline:");
+    
+        //The user wants the rental, change rental flag and remaining nights
+        if (confirmation.equalsIgnoreCase("yes")) {
+            System.out.println("Processing your order!");
+            try {
+                Parser.writePurchaseToRentalsFile(rentID, nights);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Your order has been completed!");
+        } else {
+            System.out.println("Order has been cancelled.");
+        }
+    }  
 
     public void writeToAccountsFile(String newUsername, String newUserType){
         //need to format the username and usertype properly
@@ -118,7 +276,7 @@ public class User {
 
     //creates a temp file, if the username is found, dont write to temp file
     //Once done, delete useraccounts.txt and rename temp file to useraccounts.txt
-    public void deleteFromFile(String usernameToDelete) throws IOException {
+    public void deleteFromAccountsFile(String usernameToDelete) throws IOException {
         File inputFile = new File("useraccounts.txt");
         File tempFile = new File("tempFile.txt");
 
@@ -147,25 +305,34 @@ public class User {
         inputFile.delete();
         tempFile.renameTo(inputFile);
     }
-    public void post(String city, Float rentPrice, int bedrooms){
-        System.out.println("Writing the rental to availablerentalsfile.txt");
-        writeToRentalsFile(city, rentPrice, bedrooms); 
-    }
 
-    public void writeToRentalsFile(String city, Float rentPrice, int bedrooms){
-        //Build the string to write to the file, one by one
-        //Eventually, take its length and subtract from 45 to find the number of _ needed at the end before number of nights NN
+    // Add a new unit to current available rental units
+    public void writeToRentalsFile(Unit newUnit) {
+        String toWriteToFile = newUnit.getRentID() + "__";
 
-        //need some sort fn that will check if rentprice has .00 appended. if it doesnt, add it 
-        String toWriteToFile = randomString(8) + "_" + this.username + "_" + city + "_" + String.valueOf(bedrooms) + "_" +  String.format("%.2f", rentPrice) + "_" + "F";
-        //still have to add the NN (number of nights remaining if currently rented), hence the 43 instead of 45.
-        int underscoresNeeded = 43 - toWriteToFile.length();
-        
-        for (int i = 0; i < underscoresNeeded; i ++){
-            toWriteToFile = toWriteToFile + "_";
+        toWriteToFile += newUnit.getUserName();
+        for (int i = 0; i < (17 - newUnit.getUserName().length()); i ++) {
+            toWriteToFile += "_";
         }
 
-        toWriteToFile = toWriteToFile + "00";
+        toWriteToFile += newUnit.getCity();
+        for (int i = 0; i < (27 - newUnit.getCity().length()); i ++) {
+            toWriteToFile += "_";
+        }
+
+        toWriteToFile += newUnit.getRentalPrice();
+        for (int i = 0; i < (8 - (String.valueOf(newUnit.getRentalPrice())).length()); i++) {
+            toWriteToFile += "_";
+        }
+
+        toWriteToFile += newUnit.getNumBedrooms() + "__";
+
+        toWriteToFile += newUnit.getRentalFlag();
+        for (int i = 0; i < (7 - String.valueOf(newUnit.getRentalFlag()).length()); i ++) {
+            toWriteToFile += "_";
+        }
+
+        toWriteToFile += newUnit.getNumNights();
 
         try(FileWriter fw = new FileWriter("availablerentalsfile.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -174,91 +341,29 @@ public class User {
             out.println();
             out.print(toWriteToFile);
         } catch (IOException e) {
+        //exception handling left as an exercise for the reader
         }
-    }
-
-
-    //used to create a random alphanumeric string used in availablerentalsfile.txt as the rentID
-    public String randomString(int length){
-        String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        SecureRandom rnd = new SecureRandom();
-        
-        StringBuilder sb = new StringBuilder(length);
-        for(int i = 0; i < length; i++)
-           sb.append(AB.charAt(rnd.nextInt(AB.length())));
-        return sb.toString();
-    }
-
-    //Read through availablerentalsfile.txt, then output every rentals that fits the req
-    public void search(String city, Float rentPrice, int bedrooms){
-
-        //loop through the Renting units stored in Parser class
-        //the units stored there will not included units added this session as per post requirement
-        for (Renting rental: Parser.rentals){
-            if (rental.city.equals(city) && rental.rentalPricePerNight <= rentPrice && rental.numberOfBedrooms >= bedrooms && rental.rentalFlag.equals("F")) {
-                System.out.println(rental);
-            }
-        }   
-    }
-
-    //To Do: 
-    //Show rent cost, nights * rentcost to user
-    //Ask them if they want to accept. 
-    //rewrite availablerentalsfile.txt, boolean to true
-    //Only accept if rentID corresponds to a rentalflag value of T
-    public void rent(String rentID, int nights){
-        for (Renting rental: Parser.rentals){
-            if (rental.rentID.equals(rentID) && rental.rentalFlag.equals("F")) {
-                int totalCost = nights * Math.round(rental.rentalPricePerNight);
-                String confirmation = test.getGenericInput("Are you sure you want to book: " + rentID + " at a total cost of: " + totalCost + "\nType yes to accept or no to decline:");
-
-                //The user wants the rental, change rental flag and remaining nights
-                if (confirmation.equalsIgnoreCase("yes")) {
-                    System.out.println("Processing your order!");
-                    try {
-                        Parser.writePurchaseToRentalsFile(rentID, nights);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("Your order has been completed!");
-                }
-            }
-        }  
     }
 
     public String writeToTransactionFile(String transaction){return "";}
 
-    public String callCommand(String mainCommand, String[] inputGiven){
-
-        switch (mainCommand) {
-            case "create":
-                create(inputGiven[1], inputGiven[2]);
-                break;
-            case "delete":
-                delete(inputGiven[1]);
-                break;
-            case "post":
-                //city, rentprice, bedrooms
-                Float rentprice = Float.parseFloat(inputGiven[2]);
-                int bedrooms = Integer.parseInt(inputGiven[3]);
-                post(inputGiven[1],rentprice,bedrooms);
-                break;
-            case "search":
-                //cutym rebtprice bedrooms
-                Float rentprice1 = Float.parseFloat(inputGiven[2]);
-                int bedrooms1 = Integer.parseInt(inputGiven[3]);
-                search(inputGiven[1],rentprice1,bedrooms1);
-                break;
-            case "rent":
-                //rentID, nights
-                int nights = Integer.parseInt(inputGiven[2]);
-                rent(inputGiven[1],nights);
-                break;
-            default:
-                System.out.println("Invalid Input!");
-        }
-        return ""; 
+    // Generate a unique String to identify units
+    private String generateUnitID() {
+        String id = UUID.randomUUID().toString();
+        id = id.substring(0, 8);
+        return id;
     }
+
+    // Find a given rentID is in availablerentalsfiles.txt. If it exists, return it. If not, return null
+    private Unit rentalExists(String rentID) {
+        for (Unit rental: Parser.rentals) {
+            if (rental.getRentID().equals(rentID) && !(rental.getRentalFlag())) {
+                return rental;
+            }
+        }  
+        return null;
+    }
+
 
     @Override
     public String toString() {

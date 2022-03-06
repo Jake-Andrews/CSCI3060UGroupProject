@@ -1,51 +1,43 @@
 package main;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 //The parser class is used to read the availablerentalsfile.txt and userraccounts.txt files
 //into arraylists that can be accessed from other classes
 public class Parser {
-    public static ArrayList<Renting> rentals = new ArrayList<Renting>(); 
+    public static ArrayList<Unit> rentals = new ArrayList<Unit>(); 
     public static ArrayList<User> users = new ArrayList<User>();
 
     public static void readAvailableRentalsFile() throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
         ArrayList<String> fileContents = readFileIntoArrayList("availablerentalsfile.txt");
 
-        for (String user: fileContents){
+        for (String line: fileContents){
             //remove two or more _ and replace with one _
-            String trimmed = user.trim().replaceAll("_{2,}", "_").trim();
+            String trimmed = line.trim().replaceAll("_{2,}", "_").trim();
             //Since there are only one _ between words, split based on _ 
-            String[] line = trimmed.split("_");
+            String[] splitLine = trimmed.split("_");
 
-            String rentID = line[0];
-            String username = line[1];
-            String city = line[2];
-            int numberOfBedrooms = Integer.parseInt(line[3]);
-            float rentalPricePerNight = Float.parseFloat(line[4]);
-            String rentalFlag = line[5];
-            int numberOfNightsRemanining = Integer.parseInt(line[6]);
+            String rentID = splitLine[0];
+            String username = splitLine[1];
+            String city = splitLine[2];
+            float rentalPricePerNight = Float.parseFloat(splitLine[3]);
+            int numberOfBedrooms = Integer.parseInt(splitLine[4]);
+            String rentalFlag = splitLine[5];
+            int numberOfNightsRemanining = Integer.parseInt(splitLine[6]);
 
-            Renting rental = new Renting(rentID, username, city, numberOfBedrooms, rentalPricePerNight, rentalFlag, numberOfNightsRemanining);
+            Unit rental = new Unit(rentID, username, city, rentalPricePerNight, numberOfBedrooms, rentalFlag, numberOfNightsRemanining);
             rentals.add(rental);
         }
-
-        //for (Renting rental : rentals){
-        //    System.out.println(rental);
-        //}
     }
 
     public static void readUserAccountsFile() throws FileNotFoundException{
@@ -64,10 +56,6 @@ public class Parser {
             User user = new User(username, userType);
             users.add(user);
         }
-
-        //for (User user : users){
-        //    System.out.println(user);
-        //}
     }
 
     public static ArrayList<String> readFileIntoArrayList(String filename) {
@@ -93,7 +81,7 @@ public class Parser {
         PrintWriter out = new PrintWriter(bw))
         {   
             //loop through the rentals
-            for (Renting rental : rentals){
+            for (Unit rental : rentals){
                 if (rental.rentID.equals(rentID)){
                     String lineToWrite = rental.rentID + "_" + rental.username + "_" + rental.city + "_" + Integer.toString(rental.numberOfBedrooms) + "_" + Float.toString(rental.rentalPricePerNight) + "_" + "T" + "_" + Integer.toString(nights);
                     out.print(lineToWrite);
@@ -137,7 +125,7 @@ public class Parser {
             String numberOfNightsRemanining = line[6];
 
             if (rentID.equals(fileRentID)){
-                String lineToWrite = fileRentID + "_" + username + "_" + city + "_" + numberOfBedrooms + "_" + rentalPricePerNight + "_" + "T" + "_" + nights;
+                String lineToWrite = fileRentID + "_" + username + "_" + city + "_" + numberOfBedrooms + "_" + rentalPricePerNight + "_" + "true" + "_" + nights;
                 System.out.println(lineToWrite);
                 lines.add(lineToWrite);
             }

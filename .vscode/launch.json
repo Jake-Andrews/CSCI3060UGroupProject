@@ -9,6 +9,13 @@
             "name": "Launch Main",
             "request": "launch",
             "mainClass": "main.Main",
+            "projectName": "Phase2-mainbranch_13ba0f2e"
+        },
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "main.Main",
             "projectName": "CSCI3060UGroupProject_9b36350d"
         },
         {
