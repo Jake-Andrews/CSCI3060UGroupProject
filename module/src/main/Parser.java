@@ -72,33 +72,6 @@ public class Parser {
         return list;
     }
 
-    //When rent command is used, this writes the rental to a file
-    /*
-    public static void writePurchaseToRentalsFile(String rentID, int nights){
-
-        try(FileWriter fw = new FileWriter("availablerentalsfile.txt", false);
-        BufferedWriter bw = new BufferedWriter(fw);
-        PrintWriter out = new PrintWriter(bw))
-        {   
-            //loop through the rentals
-            for (Unit rental : rentals){
-                if (rental.rentID.equals(rentID)){
-                    String lineToWrite = rental.rentID + "_" + rental.username + "_" + rental.city + "_" + Integer.toString(rental.numberOfBedrooms) + "_" + Float.toString(rental.rentalPricePerNight) + "_" + "T" + "_" + Integer.toString(nights);
-                    out.print(lineToWrite);
-                    out.println();
-                }
-                else {
-                    String lineToWrite = rental.rentID + "_" + rental.username + "_" + rental.city + "_" + 
-                    Integer.toString(rental.numberOfBedrooms) + "_" + Float.toString(rental.rentalPricePerNight) + 
-                    "_" + rental.rentalFlag + "_" + Integer.toString(rental.numberOfNightsRemanining);
-                    out.print(lineToWrite);
-                    out.println();  
-                }
-            }
-        } catch (IOException e) {
-        }
-    }*/
-
     //Have to re-read from the file, since if the current user posted a rental, the rental wont be in the 
     //arraylist rentals, but it will be in the file
     //Writes the rent to a file, changing rentflag and nightsremaining for the given rentID
@@ -119,18 +92,51 @@ public class Parser {
             String fileRentID = line[0];
             String username = line[1];
             String city = line[2];
-            String numberOfBedrooms = line[3];
-            String rentalPricePerNight = line[4];
+            String rentalPricePerNight = line[3];
+            String numberOfBedrooms = line[4];
             String rentalFlag = line[5];
-            String numberOfNightsRemanining = line[6];
+            String numberOfNightsRemaining = line[6];
 
-            if (rentID.equals(fileRentID)){
-                String lineToWrite = fileRentID + "_" + username + "_" + city + "_" + numberOfBedrooms + "_" + rentalPricePerNight + "_" + "true" + "_" + nights;
+            if (rentID.equals(fileRentID)) {
+                String lineToWrite= fileRentID + "__";
+                lineToWrite += username;
+                    for (int i = 0; i < (17 - username.length()); i ++) {
+                        lineToWrite += "_";
+                    }
+                lineToWrite += city;
+                for (int i = 0; i < (27 - city.length()); i ++) {
+                    lineToWrite += "_";
+                }
+                lineToWrite += rentalPricePerNight;
+                for (int i = 0; i < (8 - rentalPricePerNight.length()); i++) {
+                    lineToWrite += "_";
+                }
+                lineToWrite += numberOfBedrooms + "__true___" + nights;
+
                 System.out.println(lineToWrite);
                 lines.add(lineToWrite);
             }
             else {
-                String lineToWrite = fileRentID + "_" + username + "_" + city + "_" + numberOfBedrooms + "_" + rentalPricePerNight + "_" + rentalFlag + "_" + numberOfNightsRemanining;
+                String lineToWrite= fileRentID + "__";
+                lineToWrite += username;
+                    for (int i = 0; i < (17 - username.length()); i ++) {
+                        lineToWrite += "_";
+                    }
+                lineToWrite += city;
+                for (int i = 0; i < (27 - city.length()); i ++) {
+                    lineToWrite += "_";
+                }
+                lineToWrite += rentalPricePerNight;
+                for (int i = 0; i < (8 - rentalPricePerNight.length()); i++) {
+                    lineToWrite += "_";
+                }
+                lineToWrite += numberOfBedrooms + "__";
+                lineToWrite += rentalFlag;
+                for (int i = 0; i < (7 - rentalFlag.length()); i ++) {
+                    lineToWrite += "_";
+                }
+                lineToWrite += numberOfNightsRemaining;
+                
                 System.out.println(lineToWrite);
                 lines.add(lineToWrite);
             }
