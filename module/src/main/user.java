@@ -3,6 +3,7 @@ package main;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -188,32 +189,6 @@ public class User {
         return sb.toString();
     }
 
-    //rent price is max, bedrooms is min, city is req
-    //Read through availablerentalsfile.txt, then output every rentals that fits the req
-    public void search1(String city, Float rentPrice, int bedrooms){
-
-        //puts lines from availablerentals.txt into arraylist
-        ArrayList<String> fileContents = Parser.readFileIntoArrayList("availablerentalsfile.txt");
-
-        //loop through the arraylist, check for the correct city, then check bedroom and price values
-        for (String user: fileContents){
-            //remove two or more _ and replace with one _
-            String trimmed = user.trim().replaceAll("_{2,}", "_").trim();
-            //Since there are only one _ between words, split based on _ 
-            String[] line = trimmed.split("_");
-            
-            //putting the city, rentprice, bedrooms from the array into variables
-            //to make it more readable
-            String fileCityName = line[2];
-            Float fileRentPrice = Float.parseFloat(line[4]);
-            int fileBedrooms = Integer.parseInt(line[3]);
-            
-            if (fileCityName.equals(city) && fileRentPrice <= rentPrice && fileBedrooms >= bedrooms) {
-                //System.out.println()    
-            } 
-        }   
-    }
-
     //Read through availablerentalsfile.txt, then output every rentals that fits the req
     public void search(String city, Float rentPrice, int bedrooms){
 
@@ -226,7 +201,30 @@ public class User {
         }   
     }
 
-    public void rent(int rentID, int nights){}
+    //To Do: 
+    //Show rent cost, nights * rentcost to user
+    //Ask them if they want to accept. 
+    //rewrite availablerentalsfile.txt, boolean to true
+    //Only accept if rentID corresponds to a rentalflag value of T
+    public void rent(String rentID, int nights){
+        for (Renting rental: Parser.rentals){
+            if (rental.rentID.equals(rentID) && rental.rentalFlag.equals("F")) {
+                int totalCost = nights * Math.round(rental.rentalPricePerNight);
+                String confirmation = test.getGenericInput("Are you sure you want to book: " + rentID + " at a total cost of: " + totalCost + "\nType yes to accept or no to decline:");
+
+                //The user wants the rental, change rental flag and remaining nights
+                if (confirmation.equalsIgnoreCase("yes")) {
+                    System.out.println("Processing your order!");
+                    try {
+                        Parser.writePurchaseToRentalsFile(rentID, nights);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Your order has been completed!");
+                }
+            }
+        }  
+    }
 
     public String writeToTransactionFile(String transaction){return "";}
 
@@ -253,9 +251,8 @@ public class User {
                 break;
             case "rent":
                 //rentID, nights
-                int rentID = Integer.parseInt(inputGiven[1]);
                 int nights = Integer.parseInt(inputGiven[2]);
-                rent(rentID,nights);
+                rent(inputGiven[1],nights);
                 break;
             default:
                 System.out.println("Invalid Input!");
