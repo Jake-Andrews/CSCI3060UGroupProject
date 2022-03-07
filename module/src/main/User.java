@@ -50,6 +50,7 @@ public class User {
     
                 case "logout":
                     this.loggedIn = false;
+                    writeToTransactionFile();
                     System.out.println("\nPrinting Daily Transactions:");
                     for (String transaction: dailyTransactions1) {
                         System.out.println(transaction);
@@ -362,7 +363,18 @@ public class User {
         }
     }
 
-    public String writeToTransactionFile(String transaction){return "";}
+    private void writeToTransactionFile(){
+        try(FileWriter fw = new FileWriter("dailytransactionsfile.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
+            for (String transaction : dailyTransactions1) {
+                out.print(transaction);
+                out.println();
+            }
+        } catch (IOException e) {
+        }
+    }
 
     // Generate a unique String to identify units
     private String generateUnitID() {
