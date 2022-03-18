@@ -25,10 +25,16 @@ public class User {
     public boolean loggedIn; 
     public ArrayList<String> dailyTransactions1 = new ArrayList<String>();
     public CommandLine test = new CommandLine();
+    public String rentalsFile = "";
+    public String userAccountsFile = "";
+    public String transactionsFile = "";
 
-    public User(String username, String userType){
+    public User(String username, String userType, String rentalsFile, String userAccountsFile, String transactionsFile){
         this.username = username; 
         this.userType = userType; 
+        this.rentalsFile = rentalsFile; 
+        this.userAccountsFile = userAccountsFile; 
+        this.transactionsFile = transactionsFile;
     }
 
     //When a user logs in, the method is run and accepts user input and 
@@ -255,7 +261,7 @@ public class User {
         if (confirmation.equalsIgnoreCase("yes")) {
             System.out.println("Processing your order!");
             try {
-                Parser.writePurchaseToRentalsFile(rentID, nights);
+                Parser.writePurchaseToRentalsFile(rentID, nights, rentalsFile, userAccountsFile, transactionsFile);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -281,7 +287,7 @@ public class User {
 
         toWriteToFile = toWriteToFile + newUserType;
 
-        try(FileWriter fw = new FileWriter("useraccounts.txt", true);
+        try(FileWriter fw = new FileWriter(userAccountsFile, true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw))
         {   
@@ -295,7 +301,7 @@ public class User {
     //creates a temp file, if the username is found, dont write to temp file
     //Once done, delete useraccounts.txt and rename temp file to useraccounts.txt
     public void deleteFromAccountsFile(String usernameToDelete) throws IOException {
-        File inputFile = new File("useraccounts.txt");
+        File inputFile = new File(userAccountsFile);
         File tempFile = new File("tempFile.txt");
 
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -352,7 +358,7 @@ public class User {
 
         toWriteToFile += newUnit.getNumNights();
 
-        try(FileWriter fw = new FileWriter("availablerentalsfile.txt", true);
+        try(FileWriter fw = new FileWriter(rentalsFile, true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw))
         {   
@@ -364,7 +370,7 @@ public class User {
     }
 
     private void writeToTransactionFile(){
-        try(FileWriter fw = new FileWriter("dailytransactionsfile.txt", true);
+        try(FileWriter fw = new FileWriter(transactionsFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter out = new PrintWriter(bw))
         {

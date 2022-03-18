@@ -1,4 +1,5 @@
 package main;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 /*
@@ -16,6 +17,17 @@ public class Main {
         //gets user to type login, then type their username, validates that the usernameis in the useraccounts.txt file
         //then create user class and calls user.getcommands() to accept commands from the user until they type logout
     public static void main(String[] args) {
+        //ot-bnb users.txt rental-units.txt transout.atf
+        if (args.length <=2){
+            System.out.println("Incorrect usage! Proper usage: Main availablerentalsfile.txt useraccounts.txt dailytransactionsfile.txt");
+            System.exit(0);
+        }
+
+        String rentalsFile = new File(args[0]).getAbsolutePath();
+        String userAccountsFile = new File(args[1]).getAbsolutePath();
+        String transactionsFile = new File(args[2]).getAbsolutePath();
+        //System.out.println(rentalsFile);
+
         while (true) {
             //get the user to type login
             Scanner scanner = new Scanner(System.in);
@@ -27,7 +39,7 @@ public class Main {
 
             //reads in the useraccounts file
             try {
-                Parser.readUserAccountsFile();
+                Parser.readUserAccountsFile(rentalsFile, userAccountsFile, transactionsFile);
             } catch (FileNotFoundException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -43,11 +55,11 @@ public class Main {
         
 
             //create a user with the info given
-            User user = new User(userInput, command.getUserType(userInput));
+            User user = new User(userInput, command.getUserType(userInput), rentalsFile, userAccountsFile, transactionsFile);
 
             //reads in the avaliable rental units file since the user has sucessfully logged in 
             try {
-                Parser.readAvailableRentalsFile();
+                Parser.readAvailableRentalsFile(rentalsFile, userAccountsFile, transactionsFile);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
