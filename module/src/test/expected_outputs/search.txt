@@ -1,0 +1,12 @@
+rentID: 113142f7
+Username: USER
+City: Whitby
+numberOfBedrooms: 2
+rentalPricePerNight: 300.00
+rentalFlag: false
+numberOfNightsRemaining: 0
+
+Daily transaction file string: 04_USER_____________AA__113142f7__Whitby_____________________2__300.0___0
+
+Please enter a command!
+For a list of commands type 'help'
