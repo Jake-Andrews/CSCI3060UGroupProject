@@ -16,8 +16,8 @@ import java.util.Scanner;
 public class Parser {
     public static ArrayList<Unit> rentals = new ArrayList<Unit>(); 
     public static ArrayList<User> users = new ArrayList<User>();
-
-    public static void readAvailableRentalsFile(String rentalsFile,String  userAccountsFile,String  transactionsFile) throws FileNotFoundException{
+    public final static Scanner sc = new Scanner(System.in); 
+    public static void readAvailableRentalsFile(String rentalsFile,String  userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
         ArrayList<String> fileContents = readFileIntoArrayList(rentalsFile);
 
@@ -40,7 +40,7 @@ public class Parser {
         }
     }
 
-    public static void readUserAccountsFile(String rentalsFile,String  userAccountsFile,String  transactionsFile) throws FileNotFoundException{
+    public static void readUserAccountsFile(String rentalsFile,String  userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
         ArrayList<String> fileContents = readFileIntoArrayList(userAccountsFile);
 
@@ -53,7 +53,7 @@ public class Parser {
             String username = splitLine[0];
             String userType = splitLine[1];
 
-            User user = new User(username, userType, rentalsFile, userAccountsFile, transactionsFile);
+            User user = new User(username, userType, rentalsFile, userAccountsFile);
             users.add(user);
         }
     }
@@ -75,7 +75,7 @@ public class Parser {
     //Have to re-read from the file, since if the current user posted a rental, the rental wont be in the 
     //arraylist rentals, but it will be in the file
     //Writes the rent to a file, changing rentflag and nightsremaining for the given rentID
-    public static void writePurchaseToRentalsFile(String rentID, int nights, String rentalsFile,String  userAccountsFile,String  transactionsFile) throws FileNotFoundException{
+    public static void writePurchaseToRentalsFile(String rentID, int nights, String rentalsFile,String  userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
         ArrayList<String> fileContents = readFileIntoArrayList(rentalsFile);
 
