@@ -1,0 +1,7 @@
+login
+USER
+create
+USER123
+AA
+logout
+exit
