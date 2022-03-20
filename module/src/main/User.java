@@ -25,16 +25,10 @@ public class User {
     public boolean loggedIn; 
     public ArrayList<String> dailyTransactions1 = new ArrayList<String>();
     public CommandLine test = new CommandLine();
-    public String rentalsFile = "";
-    public String userAccountsFile = "";
-    public String transactionsFile = "";
 
-    public User(String username, String userType, String rentalsFile, String userAccountsFile){
+    public User(String username, String userType){
         this.username = username; 
         this.userType = userType; 
-        this.rentalsFile = rentalsFile; 
-        this.userAccountsFile = userAccountsFile; 
-        this.transactionsFile = "dailytransactionsfile1.txt";
     }
 
     //When a user logs in, the method is run and accepts user input and 
@@ -56,10 +50,8 @@ public class User {
     
                 case "logout":
                     this.loggedIn = false;
-                    Unit unit = new Unit("", "", "", 000000, 0, "", 00);
-                    addToTransactionArrayList("00", unit);
                     writeToTransactionFile();
-                    System.out.print("\nPrinting Daily Transactions:");
+                    System.out.println("\nPrinting Daily Transactions:");
                     for (String transaction: dailyTransactions1) {
                         System.out.println(transaction);
                     }
@@ -263,7 +255,7 @@ public class User {
         if (confirmation.equalsIgnoreCase("yes")) {
             System.out.println("Processing your order!");
             try {
-                Parser.writePurchaseToRentalsFile(rentID, nights, rentalsFile, userAccountsFile);
+                Parser.writePurchaseToRentalsFile(rentID, nights);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -289,7 +281,7 @@ public class User {
 
         toWriteToFile = toWriteToFile + newUserType;
 
-        try(FileWriter fw = new FileWriter(userAccountsFile, true);
+        try(FileWriter fw = new FileWriter("useraccounts.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw))
         {   
@@ -303,7 +295,7 @@ public class User {
     //creates a temp file, if the username is found, dont write to temp file
     //Once done, delete useraccounts.txt and rename temp file to useraccounts.txt
     public void deleteFromAccountsFile(String usernameToDelete) throws IOException {
-        File inputFile = new File(userAccountsFile);
+        File inputFile = new File("useraccounts.txt");
         File tempFile = new File("tempFile.txt");
 
         BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -360,7 +352,7 @@ public class User {
 
         toWriteToFile += newUnit.getNumNights();
 
-        try(FileWriter fw = new FileWriter(rentalsFile, true);
+        try(FileWriter fw = new FileWriter("availablerentalsfile.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw))
         {   
@@ -370,33 +362,19 @@ public class User {
         //exception handling left as an exercise for the reader
         }
     }
-    //Checking to see what number to append to the end of the transactionfile name
-    //Does the file exist, if so, add a 1 to the end. loop until it doesn't exist.
+
     private void writeToTransactionFile(){
-        File f = new File(transactionsFile);
-        //getting filename from path
-        String fileNameWithoutPath = f.getName();
-        //removing .
-        String fileNameWithoutExtension = fileNameWithoutPath.replaceFirst("[.][^.]+$", "");
-        fileNameWithoutExtension = fileNameWithoutExtension.replaceFirst(".$","");
-        int counter = 0;
-        String filename = transactionsFile; 
-        //check if file exists, if it does, add a 1 to the end, loop until file doesn't exist
-        while(f.isFile()){ 
-            counter++;
-            filename = fileNameWithoutExtension + Integer.toString(counter) + ".txt";
-            f = new File(filename); 
-        } 
-        //writing to a file
-        try (FileWriter fw = new FileWriter(filename, true)) {
+        try(FileWriter fw = new FileWriter("dailytransactionsfile.txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw))
+        {
             for (String transaction : dailyTransactions1) {
-                fw.write(transaction + System.lineSeparator());
+                out.print(transaction);
+                out.println();
             }
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
-        
 
     // Generate a unique String to identify units
     private String generateUnitID() {
@@ -417,7 +395,6 @@ public class User {
 
     private void addToTransactionArrayList(String command, Unit unit) {
         //01-create, 02-delete, 03-post, 04-search, 05-rent, 00-end of session
-
         String toWriteToFile = command + "_";
 
         toWriteToFile += this.username;
