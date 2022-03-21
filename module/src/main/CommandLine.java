@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class CommandLine {
     //list of valid commands
     public static String[] validCommands = {"login", "logout", "create", "delete", "post", "search", "rent"};
-    
     public CommandLine() {}
 
     //given a username, will return their usertype
@@ -61,7 +60,7 @@ public class CommandLine {
             String[] line = user.split("_");
 
             if (username.equals(line[0])) {
-                System.out.println("You have been logged in!");
+                System.out.println("\nYou have been logged in!");
                 return true; 
             } 
         }
@@ -74,27 +73,29 @@ public class CommandLine {
     //Could also just reject any user input that doesn't match (case insensitive) a command. 
     public String recieveTransaction() {
         //Get user input, while loop to make sure input is not empty. Give help commands if they want them. 
-        System.out.println("\nPlease enter a command!\nFor a list of commands type 'help'");
-        Scanner scanner = new Scanner(System.in);
+        System.out.print("\nPlease enter a command!\nFor a list of commands type 'help': ");
         String userInput = "";
-        userInput = scanner.nextLine();
+
+        if (Parser.sc.hasNextLine()){
+            userInput = Parser.sc.nextLine();
+        }
         if (userInput.matches("^.*help.*$")){
         //regex to match help, and checks for help as a substring
         //if (userInput.matches("(?i).*help.*")){
             printCommands();
-            scanner.nextLine();
+            Parser.sc.nextLine();
         };
 
         //take input from a user until user provides a valid command
         userInput.toLowerCase();
+
         while (userInput.isEmpty() && !(userInput.matches("^.*?(login|logout|create|delete|post|search|rent).*$"))){
-            System.out.println("Please input a valid command!");
-            userInput = scanner.nextLine();
+            System.out.print("\nPlease input a valid command: ");
+            userInput = Parser.sc.nextLine();
         }
         //once this is reached, a valid command has been entered
         //determine what the command was, get the req input, return this input
         //in the form of a space seperated list
-        System.out.println("\nCommand given: " + userInput);
         return userInput;
     }
     
@@ -104,7 +105,7 @@ public class CommandLine {
         for (String command: validCommands){
             System.out.println(command);
         }
-        System.out.println("\nPlease enter a command!");
+        System.out.print("\nPlease enter a command:");
     }
 
     //Used to get input from a user
@@ -113,11 +114,12 @@ public class CommandLine {
     //allowed. Maybe other stuff as well. Assumes the input is valid 
     public String getGenericInput(String repeatPhrase){
         String userInput = ""; 
-        Scanner scanner = new Scanner(System.in);
 
         do {
-            System.out.print(repeatPhrase);
-            userInput = scanner.nextLine();
+            System.out.println(repeatPhrase);
+            if (Parser.sc.hasNextLine()){
+                userInput = Parser.sc.nextLine();
+            }
         }
         while (userInput.isEmpty());
 
