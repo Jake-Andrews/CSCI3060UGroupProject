@@ -453,4 +453,5 @@ public class User {
         return String.format("Username: %s\r\nUserType: %s\r\n", 
         this.username, this.userType);
 }
+>>>>>>> 0db076c99f996bd92744f5b589e83e4df66e12db
 }
