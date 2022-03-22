@@ -1,14 +1,12 @@
-Welcome, please login to use the program.
-To exit type exit, To start type login:
-Please enter a valid username:
+Welcome, please login to use the program. 
+To exit type exit, To start type login: 
+Please enter a valid username: 
 You have been logged in!
 
 Please enter a command!
-For a list of commands type 'help':
-Please enter the city where the unit you are renting is:
-Please enter a valid price to rent the unit at (max is 999.99):
-Please enter the number of bedrooms (max is 9):
-
+For a list of commands type 'help': Please enter the city where the unit you are renting is: 
+Please enter a valid price to rent the unit at (max is 999.99): 
+Please enter the number of bedrooms (max is 9): 
 rentID: 113142f7
 Username: USER
 City: Whitby
@@ -20,11 +18,10 @@ numberOfNightsRemaining: 0
 Daily transaction file string: 04_USER_____________AA__113142f7__Whitby_____________________2__300.0___0
 
 Please enter a command!
-For a list of commands type 'help': logout
-Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
+For a list of commands type 'help': Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
 
 Printing Daily Transactions:04_USER_____________AA__113142f7__Whitby_____________________2__300.0___0
 00_USER_____________AA_______________________________0__0.0_____0
 You have been successfully logged out!
-Welcome, please login to use the program.
-To exit type exit, To start type login:
+Welcome, please login to use the program. 
+To exit type exit, To start type login: Thank you for using our program!

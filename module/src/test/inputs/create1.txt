@@ -1,7 +1,5 @@
 login
-USER
+USER3
 create
-USER123
-AA
 logout
 exit

@@ -111,7 +111,13 @@ public class User {
         }
         System.out.println("You have been successfully logged out!"); 
     }
-
+    public boolean invalidUsername(String username){
+        if (!(username.length() <= 15) || !(username.matches("[a-zA-Z0-9 ]*"))){
+            System.out.println("Error, the username " + username + " is invalid. Usernames must contain less than 15 characters and alphanumeric characters!");
+            return true; 
+        }   
+        return false; 
+    }
     // Transactions
     public void create() {
         String newUsername;
@@ -120,7 +126,7 @@ public class User {
         // Get a username for the new account
         do {
             newUsername = test.getGenericInput("\nPlease enter a valid username: ");
-        } while (newUsername.length() > 15 || newUsername.matches("[@|#|$|%|^|&|*]"));        // Username is limited to at most 15 characters and cannot be special characters
+        } while (invalidUsername(newUsername) || usernameExists(newUsername));        // Username is limited to at most 15 characters and cannot be special characters
 
         // Get a user type for the new account
         do {
@@ -128,6 +134,8 @@ public class User {
         } while (!(newUsertype.matches("AA|FS|RS|PS")));                                    // User type must be an accepted type
 
         System.out.println("Creating the user: " + newUsername + " with a usertype of: " + newUsertype);
+        //checking to see if there is already a user with the same username
+
         writeToAccountsFile(newUsername, newUsertype);
         System.out.println("User created!");
 
@@ -136,7 +144,16 @@ public class User {
         addToTransactionArrayList("01", unit);
     }
 
-
+    //used in create() to check if a usernameExists
+    public boolean usernameExists(String username){
+        for (User user: Parser.users){
+            if (user.username.equals(username)){
+                System.out.println("Error, the username " + username + " already exists.");
+                return true;
+            }
+        }
+        return false; 
+    }
     public void delete() {
         String deletingUsername;
         Boolean doneDeleting = false;
@@ -296,6 +313,12 @@ public class User {
             out.println();
             out.print(toWriteToFile);
         } catch (IOException e) {
+        }
+        //reading the new useraccounts file into an arraylist for ease of use elsewhere in the program
+        try {
+            Parser.readUserAccountsFile(rentalsFile, userAccountsFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
