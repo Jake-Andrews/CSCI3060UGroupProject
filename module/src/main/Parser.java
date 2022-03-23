@@ -17,6 +17,7 @@ public class Parser {
     public static ArrayList<Unit> rentals = new ArrayList<Unit>(); 
     public static ArrayList<User> users = new ArrayList<User>();
     public final static Scanner sc = new Scanner(System.in); 
+
     public static void readAvailableRentalsFile(String rentalsFile,String  userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
         ArrayList<String> fileContents = readFileIntoArrayList(rentalsFile);
@@ -25,8 +26,7 @@ public class Parser {
             String trimmed = line.trim().replaceAll("_{2,}", "_").trim();
             //Since there are only one _ between words, split based on _ 
             String[] splitLine = trimmed.split("_");
-
-            String rentID = splitLine[0];
+            String rentID = splitLine[0]; 
             String username = splitLine[1];
             String city = splitLine[2];
             int numberOfBedrooms = Integer.parseInt(splitLine[3]);
@@ -39,7 +39,7 @@ public class Parser {
         }
     }
 
-    public static void readUserAccountsFile(String rentalsFile,String  userAccountsFile) throws FileNotFoundException{
+    public static void readUserAccountsFile(String rentalsFile, String  userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
         ArrayList<String> fileContents = readFileIntoArrayList(userAccountsFile);
 
@@ -113,7 +113,7 @@ public class Parser {
                 }
                 lineToWrite += "true___" + nights;
 
-                System.out.println(lineToWrite);
+                //System.out.println(lineToWrite);
                 lines.add(lineToWrite);
             }
             else {
@@ -137,7 +137,7 @@ public class Parser {
                 }
                 lineToWrite += numberOfNightsRemaining;
                 
-                System.out.println(lineToWrite);
+                //System.out.println(lineToWrite);
                 lines.add(lineToWrite);
             }
         }

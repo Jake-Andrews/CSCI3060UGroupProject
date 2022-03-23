@@ -1,7 +1,8 @@
 login
 USER
 rent
-117fb1bf
+06e86bc1
+0
 14
 yes
 logout

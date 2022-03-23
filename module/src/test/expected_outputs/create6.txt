@@ -7,7 +7,7 @@ Please enter a command!
 For a list of commands type 'help': 
 Please enter a valid username: 
 Please enter a valid usertype: 
-Creating the user: USER1031 with a usertype of: RS
+Creating the user: USER931 with a usertype of: FS
 User created!
 Daily transaction file string: 01_USER_____________AA_______________________________0__0.0_____0
 

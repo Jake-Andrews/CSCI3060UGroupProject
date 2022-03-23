@@ -15,7 +15,10 @@ echo "91510b4f__USR______________London_____________________9__999.99__true___2"
 echo "3de4de14__USER_____________Dublin_____________________6__400.0___true___1" >> availablerentalsfile.txt
 echo "06e86bc1__USER_____________Ottawa_____________________4__749.99__false__0" >> availablerentalsfile.txt
 echo "91da4934__USER_____________Ottawa_____________________2__700.0___false__0" >> availablerentalsfile.txt
-echo -n "117fb1bf__USER_____________Toronto____________________5__500.0___false__0" >> availablerentalsfile.txt #-n to remove trailing new line
+echo "117fb1bf__USER_____________Toronto____________________5__500.0___false__0" >> availablerentalsfile.txt
+echo "a943c2b1__USER_____________Toronto____________________3__400.0___false__0" >> availablerentalsfile.txt 
+echo "a943c2b2__USER_____________Toronto____________________3__400.0___false__0" >> availablerentalsfile.txt 
+echo -n "a943c2b3__USER_____________Toronto____________________3__400.0___false__0" >> availablerentalsfile.txt #-n to remove trailing new line
 
 #loop through all the files in the inputs folder
 for file in $parent_path/test/inputs/*; do 

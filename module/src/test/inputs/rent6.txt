@@ -1,8 +1,8 @@
 login
 USER
 rent
-117fb1bf
+a943c2b3
 14
-yes
+no
 logout
 exit

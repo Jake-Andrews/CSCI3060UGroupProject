@@ -1,0 +1,23 @@
+Welcome, please login to use the program. 
+To exit type exit, To start type login: 
+Please enter a valid username: 
+You have been logged in!
+
+Please enter a command!
+For a list of commands type 'help': Please enter the id of the unit you wish to rent: 
+Please enter a valid number of nights (integer value, minimum of 1, max of 14):
+Please enter a valid number of nights (integer value, minimum of 1, max of 14):
+Are you sure you want to book 06e86bc1 with a price per night of $749.99 , and a total cost of $10500?
+Type 'yes' to accept or 'no' to decline: 
+Processing your order!
+Daily transaction file string: 05_USER_____________AA__06e86bc1__Ottawa_____________________4__749.99__0
+Your order has been completed!
+
+Please enter a command!
+For a list of commands type 'help': Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
+
+Printing Daily Transactions:05_USER_____________AA__06e86bc1__Ottawa_____________________4__749.99__0
+00_USER_____________AA_______________________________0__0.0_____0
+You have been successfully logged out!
+Welcome, please login to use the program. 
+To exit type exit, To start type login: Thank you for using our program!

@@ -124,4 +124,24 @@ public class CommandLine {
 
         return userInput; 
     }
+
+    public int getGenericIntegerInput(String repeatPhrase){
+        String userInput = ""; 
+        int daysStayed = 0;
+        boolean notANumber = false; 
+        do {
+            System.out.println(repeatPhrase);
+            try
+            {
+                daysStayed = Integer.parseInt(Parser.sc.nextLine());
+                notANumber = false; 
+            }
+            catch(NumberFormatException e)
+            {
+                notANumber = true; 
+            }
+        }while (notANumber);
+
+        return daysStayed; 
+    }
 }

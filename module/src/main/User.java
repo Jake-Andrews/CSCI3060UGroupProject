@@ -268,19 +268,20 @@ public class User {
         } while (rental == null);                                                           // Rent ID must be an available unit (existing ID and is currently not being rented)
 
         do {
-            nights = Integer.parseInt(test.getGenericInput("Please enter a valid number of nights (max is 14):"));
-        } while (nights < 0 || nights > 14);                                                // Number of nights must be above 0 and less than the maximum
+            nights = test.getGenericIntegerInput("Please enter a valid number of nights (integer value, minimum of 1, max of 14):");
+        } while (nights <= 0 || nights > 14);                                                // Number of nights must be above 0 and less than the maximum
 
         int totalCost = nights * Math.round(rental.getRentalPrice());
         
         dfrmt.format(totalCost);
-        String confirmation = test.getGenericInput("Are you sure you want to book " + rentID + " at a total cost of $" + totalCost + "?\nType 'yes' to accept or 'no' to decline: ");
+        String confirmation = test.getGenericInput("Are you sure you want to book " + rentID + " with a price per night of $" + String.valueOf(rental.getRentalPrice()) + " , and a total cost of $" + totalCost + "?\nType 'yes' to accept or 'no' to decline: ");
     
         //The user wants the rental, change rental flag and remaining nights
         if (confirmation.equalsIgnoreCase("yes")) {
             System.out.println("Processing your order!");
             try {
                 Parser.writePurchaseToRentalsFile(rentID, nights, rentalsFile, userAccountsFile);
+                addToTransactionArrayList("05", rental);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -288,9 +289,6 @@ public class User {
         } else {
             System.out.println("Order has been cancelled.");
         }
-
-        // Add to the list of daily transactions after renting a unit
-        addToTransactionArrayList("05", rental);
     }  
 
     public void writeToAccountsFile(String newUsername, String newUserType){
