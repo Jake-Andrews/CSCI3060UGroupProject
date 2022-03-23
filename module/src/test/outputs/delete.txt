@@ -1,29 +1,23 @@
 Welcome, please login to use the program. 
-To exit type exit, To start type login:
-
-Please enter a valid username:
-
+To exit type exit, To start type login: 
+Please enter a valid username: 
 You have been logged in!
 
 Please enter a command!
-For a list of commands type 'help':
-
-Please enter a valid username:
-
+For a list of commands type 'help': 
+Please enter a valid username: 
 Checking if the user exists... 
 
 You have been logged in!
 The user: USR exists in our system!
-Deleting user: USER
+Deleting user: USR
 Daily transaction file string: 02_USER_____________AA_______________________________0__0.0_____0
 
 Please enter a command!
-For a list of commands type 'help': logout
-Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
+For a list of commands type 'help': Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
 
 Printing Daily Transactions:02_USER_____________AA_______________________________0__0.0_____0
 00_USER_____________AA_______________________________0__0.0_____0
 You have been successfully logged out!
-Welcome, please login to use the program.
-To exit type exit, To start type login:
-Thank you for using our program!
+Welcome, please login to use the program. 
+To exit type exit, To start type login: Thank you for using our program!

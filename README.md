@@ -6,3 +6,8 @@ When a correct username is given, the program will ask for a command will accept
 that lists the various commands. 
 
 All of the input and output files are in the root directory, "availablerentalsfile.txt, dailytransactionsfile.txt, useraccounts.txt"
+
+Possible errors using bash files: 
+An error message when running bash files
+To fix, type dos2unix (filename)
+This changes the windows encoding of the file to be run properly. 

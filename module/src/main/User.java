@@ -169,10 +169,10 @@ public class User {
 
             // Prevent user from deleting current user's account
             if (!deletingUsername.equals(this.username)) {
-                System.out.println("Deleting user: " + username);
+                System.out.println("Deleting user: " + deletingUsername);
                 doneDeleting = true;
                 try {
-                    deleteFromAccountsFile(username);
+                    deleteFromAccountsFile(deletingUsername);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
