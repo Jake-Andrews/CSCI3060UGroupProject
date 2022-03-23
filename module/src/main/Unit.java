@@ -20,14 +20,52 @@ public class Unit {
         this.rentalFlag = Boolean.valueOf(rentalFlag);
         this.numberOfNightsRemanining = numberOfNightsRemanining;
     }
-    // Getters
-    public String getRentID()       { return this.rentID; }
-    public String getUserName()     { return this.username; }
-    public String getCity()         { return this.city; }
-    public int getNumBedrooms()     { return this.numberOfBedrooms; }
-    public float getRentalPrice()   { return this.rentalPricePerNight; }
-    public boolean getRentalFlag()  { return this.rentalFlag; }
-    public int getNumNights()       { return this.numberOfNightsRemanining; }
+
+    public String getRentID() {
+        return this.rentID;
+    }
+    public void setRentID(String rentID) {
+        this.rentID = rentID;
+    }
+    public String getUsername() {
+        return this.username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public String getCity() {
+        return this.city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public float getRentalPricePerNight() {
+        return this.rentalPricePerNight;
+    }
+    public void setRentalPricePerNight(float rentalPricePerNight) {
+        this.rentalPricePerNight = rentalPricePerNight;
+    }
+    public int getNumberOfBedrooms() {
+        return this.numberOfBedrooms;
+    }
+    public void setNumberOfBedrooms(int numberOfBedrooms) {
+        this.numberOfBedrooms = numberOfBedrooms;
+    }
+    public boolean isRentalFlag() {
+        return this.rentalFlag;
+    }
+    public boolean getRentalFlag() {
+        return this.rentalFlag;
+    }
+    public void setRentalFlag(boolean rentalFlag) {
+        this.rentalFlag = rentalFlag;
+    }
+    public int getNumberOfNightsRemanining() {
+        return this.numberOfNightsRemanining;
+    }
+    public void setNumberOfNightsRemanining(int numberOfNightsRemanining) {
+        this.numberOfNightsRemanining = numberOfNightsRemanining;
+    }
 
     @Override
     public String toString() {

@@ -15,13 +15,13 @@ rentalPricePerNight: 300.00
 rentalFlag: false
 numberOfNightsRemaining: 0
 
-Daily transaction file string: 04_USER_____________AA__113142f7__Whitby_____________________2__300.0___0
+Daily transaction file string: 04_USER___________AA_113142f7_Whitby____________________2_300.0_00
 
 Please enter a command!
-For a list of commands type 'help': Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
+For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________0_0.0___00
 
-Printing Daily Transactions:04_USER_____________AA__113142f7__Whitby_____________________2__300.0___0
-00_USER_____________AA_______________________________0__0.0_____0
+Printing Daily Transactions:04_USER___________AA_113142f7_Whitby____________________2_300.0_00
+00_USER___________AA____________________________0_0.0___00
 You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!

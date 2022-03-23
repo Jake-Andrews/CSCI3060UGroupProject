@@ -101,7 +101,7 @@ public class User {
                     rent();
                     break;
                 } else {
-                    System.out.println("ERROR: You cannot post a unit on a post-standard account!");
+                    System.out.println("ERROR: You cannot rent a unit on a post-standard account!");
                     break;
                 }
     
@@ -140,7 +140,7 @@ public class User {
         System.out.println("User created!");
 
         //Unit(String rentID, String username, String city, float rentalPricePerNight, int numberOfBedrooms, String rentalFlag, int numberOfNightsRemanining)
-        Unit unit = new Unit("", "", "", 000000, 0, "", 00);
+        Unit unit = new Unit("", "", "", 000000, 0, "", 0);
         addToTransactionArrayList("01", unit);
     }
 
@@ -181,7 +181,7 @@ public class User {
             } else { System.out.println("ERROR: You cannot delete your own account!"); }
         } while (!doneDeleting);
 
-        Unit unit = new Unit("", "", "", 000000, 0, "", 00);
+        Unit unit = new Unit("", "", "", 000000, 0, "", 0);
         addToTransactionArrayList("02", unit);
     }
 
@@ -210,7 +210,7 @@ public class User {
         
         System.out.println("Creating unit now!");
         String unitID = generateUnitID();
-        Unit newUnit = new Unit(unitID, this.username, city, bedrooms,  rentPrice, "false", 0);
+        Unit newUnit = new Unit(unitID, this.username, city, bedrooms,  rentPrice, "false", 00);
 
         writeToRentalsFile(newUnit);
 
@@ -246,7 +246,7 @@ public class User {
         //loop through the available Unit stored in Parser class
         //the units stored there will not included units added this session as per post requirement
         for (Unit rental: Parser.rentals){
-            if (rental.getCity().equals(city) && rental.getRentalPrice() <= rentPrice && rental.getNumBedrooms() >= bedrooms && !(rental.getRentalFlag())) {
+            if (rental.getCity().equals(city) && rental.getRentalPricePerNight() <= rentPrice && rental.getNumberOfBedrooms() >= bedrooms && !(rental.getRentalFlag())) {
                 System.out.println(rental);
 
                 // Add each queried unit to the list of daily transactions
@@ -271,10 +271,10 @@ public class User {
             nights = test.getGenericIntegerInput("Please enter a valid number of nights (integer value, minimum of 1, max of 14):");
         } while (nights <= 0 || nights > 14);                                                // Number of nights must be above 0 and less than the maximum
 
-        int totalCost = nights * Math.round(rental.getRentalPrice());
+        int totalCost = nights * Math.round(rental.getRentalPricePerNight());
         
         dfrmt.format(totalCost);
-        String confirmation = test.getGenericInput("Are you sure you want to book " + rentID + " with a price per night of $" + String.valueOf(rental.getRentalPrice()) + " , and a total cost of $" + totalCost + "?\nType 'yes' to accept or 'no' to decline: ");
+        String confirmation = test.getGenericInput("Are you sure you want to book " + rentID + " with a price per night of $" + String.valueOf(rental.getRentalPricePerNight()) + " , and a total cost of $" + totalCost + "?\nType 'yes' to accept or 'no' to decline: ");
     
         //The user wants the rental, change rental flag and remaining nights
         if (confirmation.equalsIgnoreCase("yes")) {
@@ -357,8 +357,8 @@ public class User {
     public void writeToRentalsFile(Unit newUnit) {
         String toWriteToFile = newUnit.getRentID() + "__";
 
-        toWriteToFile += newUnit.getUserName();
-        for (int i = 0; i < (17 - newUnit.getUserName().length()); i ++) {
+        toWriteToFile += newUnit.getUsername();
+        for (int i = 0; i < (17 - newUnit.getUsername().length()); i ++) {
             toWriteToFile += "_";
         }
 
@@ -367,10 +367,10 @@ public class User {
             toWriteToFile += "_";
         }
 
-        toWriteToFile += newUnit.getNumBedrooms() + "__";
+        toWriteToFile += newUnit.getNumberOfBedrooms() + "__";
 
-        toWriteToFile += newUnit.getRentalPrice();
-        for (int i = 0; i < (8 - (String.valueOf(newUnit.getRentalPrice())).length()); i++) {
+        toWriteToFile += newUnit.getRentalPricePerNight();
+        for (int i = 0; i < (8 - (String.valueOf(newUnit.getRentalPricePerNight())).length()); i++) {
             toWriteToFile += "_";
         }
 
@@ -379,7 +379,7 @@ public class User {
             toWriteToFile += "_";
         }
 
-        toWriteToFile += newUnit.getNumNights();
+        toWriteToFile += newUnit.getNumberOfNightsRemanining();
 
         try(FileWriter fw = new FileWriter(rentalsFile, true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -441,28 +441,38 @@ public class User {
 
         String toWriteToFile = command + "_";
 
+        //adding username then filling in the possible empty spaces
         toWriteToFile += this.username;
-        for (int i = 0; i < (17 - this.username.length()); i ++) {
+        for (int i = 0; i < (14 - this.username.length()); i ++) {
             toWriteToFile += "_";
         }
+        toWriteToFile += "_"; //seperating username and usertype
 
-        toWriteToFile += this.userType + "__";
+        toWriteToFile += this.userType + "_";
 
-        toWriteToFile += unit.getRentID() + "__";
+        toWriteToFile += unit.getRentID() + "_";
 
         toWriteToFile += unit.getCity();
-        for (int i = 0; i < (27 - unit.getCity().length()); i ++) {
+        for (int i = 0; i < (25 - unit.getCity().length()); i ++) {
             toWriteToFile += "_";
         }
+        toWriteToFile += "_";
 
-        toWriteToFile += Integer.toString(unit.getNumBedrooms()) + "__";
+        toWriteToFile += Integer.toString(unit.getNumberOfBedrooms()) + "_";
 
-        toWriteToFile += unit.getRentalPrice();
-        for (int i = 0; i < (8 - (String.valueOf(unit.getRentalPrice())).length()); i++) {
+        toWriteToFile += String.valueOf(unit.getRentalPricePerNight());
+        for (int i = 0; i < (5 - (String.valueOf(unit.getRentalPricePerNight())).length()); i++) {
             toWriteToFile += "_";
         }
+        toWriteToFile += "_";
 
-        toWriteToFile += Integer.toString(unit.getNumNights());
+        //if the number of nights is a double digit
+        if (unit.getNumberOfNightsRemanining() > 9 && unit.getNumberOfNightsRemanining() < 100){
+            toWriteToFile += Integer.toString(unit.getNumberOfNightsRemanining()); 
+        } else {
+            String rightJustified = "0" + Integer.toString(unit.getNumberOfNightsRemanining());
+            toWriteToFile += rightJustified;
+        }   
 
         System.out.println("Daily transaction file string: " + toWriteToFile);
         dailyTransactions1.add(toWriteToFile);

@@ -125,8 +125,7 @@ public class CommandLine {
         return userInput; 
     }
 
-    public int getGenericIntegerInput(String repeatPhrase){
-        String userInput = ""; 
+    public int getGenericIntegerInput(String repeatPhrase){ 
         int daysStayed = 0;
         boolean notANumber = false; 
         do {

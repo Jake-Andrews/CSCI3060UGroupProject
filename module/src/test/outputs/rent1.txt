@@ -10,14 +10,14 @@ Please enter a valid number of nights (integer value, minimum of 1, max of 14):
 Are you sure you want to book 91da4934 with a price per night of $700.0 , and a total cost of $9800?
 Type 'yes' to accept or 'no' to decline: 
 Processing your order!
-Daily transaction file string: 05_USER_____________AA__91da4934__Ottawa_____________________2__700.0___0
+Daily transaction file string: 05_USER___________AA_91da4934_Ottawa____________________2_700.0_00
 Your order has been completed!
 
 Please enter a command!
-For a list of commands type 'help': Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
+For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________0_0.0___00
 
-Printing Daily Transactions:05_USER_____________AA__91da4934__Ottawa_____________________2__700.0___0
-00_USER_____________AA_______________________________0__0.0_____0
+Printing Daily Transactions:05_USER___________AA_91da4934_Ottawa____________________2_700.0_00
+00_USER___________AA____________________________0_0.0___00
 You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!

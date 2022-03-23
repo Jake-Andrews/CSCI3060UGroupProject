@@ -4,9 +4,9 @@ Please enter a valid username:
 You have been logged in!
 
 Please enter a command!
-For a list of commands type 'help': Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
+For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________0_0.0___00
 
-Printing Daily Transactions:00_USER_____________AA_______________________________0__0.0_____0
+Printing Daily Transactions:00_USER___________AA____________________________0_0.0___00
 You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!
