@@ -14,10 +14,10 @@ Daily transaction file string: 05_USER___________AA_ae3e68e7_Stratford-Upon-Avon
 Your order has been completed!
 
 Please enter a command!
-For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________0_0.0___00
+For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________________0_0.0___00
 
 Printing Daily Transactions:05_USER___________AA_ae3e68e7_Stratford-Upon-Avon_______3_249.99_00
-00_USER___________AA____________________________0_0.0___00
+00_USER___________AA____________________________________0_0.0___00
 You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!

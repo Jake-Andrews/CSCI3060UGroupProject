@@ -140,7 +140,7 @@ public class User {
         System.out.println("User created!");
 
         //Unit(String rentID, String username, String city, float rentalPricePerNight, int numberOfBedrooms, String rentalFlag, int numberOfNightsRemanining)
-        Unit unit = new Unit("", "", "", 000000, 0, "", 0);
+        Unit unit = new Unit("", "", "", 0, 0, "", 0);
         addToTransactionArrayList("01", unit);
     }
 
@@ -181,7 +181,7 @@ public class User {
             } else { System.out.println("ERROR: You cannot delete your own account!"); }
         } while (!doneDeleting);
 
-        Unit unit = new Unit("", "", "", 000000, 0, "", 0);
+        Unit unit = new Unit("", "", "", 0, 0, "", 0);
         addToTransactionArrayList("02", unit);
     }
 
@@ -456,7 +456,13 @@ public class User {
 
         toWriteToFile += this.userType + "_";
 
-        toWriteToFile += unit.getRentID() + "_";
+        //if there is no rentid (logout, etc...) add 9 spaces, 8 for rent id, one for space between items
+        if (unit.getRentID().isEmpty()){
+            for (int i = 0; i < 9; i ++){
+                toWriteToFile += "_";
+            }
+        }
+        else {toWriteToFile += unit.getRentID() + "_";}
 
         toWriteToFile += unit.getCity();
         for (int i = 0; i < (25 - unit.getCity().length()); i ++) {

@@ -4,12 +4,12 @@ Please enter a valid username:
 You have been logged in!
 
 Please enter a command!
-For a list of commands type 'help': ERROR: You must be an admin to issue this command!
+For a list of commands type 'help': ERROR: You cannot rent a unit on a post-standard account!
 
 Please enter a command!
-For a list of commands type 'help': Daily transaction file string: 00_USER3__________FS____________________________________0_0.0___00
+For a list of commands type 'help': Daily transaction file string: 00_USR1___________PS____________________________0_0.0___00
 
-Printing Daily Transactions:00_USER3__________FS____________________________________0_0.0___00
+Printing Daily Transactions:00_USR1___________PS____________________________0_0.0___00
 You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!
