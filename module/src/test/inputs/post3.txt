@@ -1,0 +1,9 @@
+login
+USER
+post
+Toronto
+500.00
+15
+5
+logout
+exit
