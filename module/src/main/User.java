@@ -296,13 +296,13 @@ public class User {
         //string needs to be 15 units long, subtract 2 for usertype.
         //Therefore, take length of username and subtract from 13 for the number of _ needed
         String toWriteToFile = newUsername;
-        int underscoresNeeded = 18 - newUsername.length();
+        int underscoresNeeded = 15 - newUsername.length();
         
         for (int i = 0; i < underscoresNeeded; i ++){
-            toWriteToFile = toWriteToFile + "_";
+            toWriteToFile += "_";
         }
 
-        toWriteToFile = toWriteToFile + newUserType;
+        toWriteToFile += newUserType;
 
         try(FileWriter fw = new FileWriter(userAccountsFile, true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -355,31 +355,39 @@ public class User {
 
     // Add a new unit to current available rental units
     public void writeToRentalsFile(Unit newUnit) {
-        String toWriteToFile = newUnit.getRentID() + "__";
+        String toWriteToFile = newUnit.getRentID() + "_";
 
         toWriteToFile += newUnit.getUsername();
-        for (int i = 0; i < (17 - newUnit.getUsername().length()); i ++) {
+        for (int i = 0; i < (14 - newUnit.getUsername().length()); i ++) {
             toWriteToFile += "_";
         }
+        toWriteToFile += "_";
 
         toWriteToFile += newUnit.getCity();
-        for (int i = 0; i < (27 - newUnit.getCity().length()); i ++) {
+        for (int i = 0; i < (25 - newUnit.getCity().length()); i ++) {
             toWriteToFile += "_";
         }
+        toWriteToFile += "_";
 
-        toWriteToFile += newUnit.getNumberOfBedrooms() + "__";
+        toWriteToFile += newUnit.getNumberOfBedrooms() + "_";
 
         toWriteToFile += newUnit.getRentalPricePerNight();
-        for (int i = 0; i < (8 - (String.valueOf(newUnit.getRentalPricePerNight())).length()); i++) {
+        for (int i = 0; i < (6 - (String.valueOf(newUnit.getRentalPricePerNight())).length()); i++) {
             toWriteToFile += "_";
         }
+        toWriteToFile += "_";
+        //if the rental flag is set to true, write t to the file, vice versa
+        if (newUnit.getRentalFlag()){
+            toWriteToFile += "t"; 
+        } else {toWriteToFile += "f"; }
+        toWriteToFile += "_";
 
-        toWriteToFile += newUnit.getRentalFlag();
-        for (int i = 0; i < (7 - String.valueOf(newUnit.getRentalFlag()).length()); i ++) {
-            toWriteToFile += "_";
-        }
-
-        toWriteToFile += newUnit.getNumberOfNightsRemanining();
+        if (newUnit.getNumberOfNightsRemanining() > 9 && newUnit.getNumberOfNightsRemanining() < 100){
+            toWriteToFile += Integer.toString(newUnit.getNumberOfNightsRemanining()); 
+        } else {
+            String rightJustified = "0" + Integer.toString(newUnit.getNumberOfNightsRemanining());
+            toWriteToFile += rightJustified;
+        }   
 
         try(FileWriter fw = new FileWriter(rentalsFile, true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -387,9 +395,7 @@ public class User {
         {   
             out.println();
             out.print(toWriteToFile);
-        } catch (IOException e) {
-        //exception handling left as an exercise for the reader
-        }
+        } catch (IOException e) {}
     }
     //Checking to see what number to append to the end of the transactionfile name
     //Does the file exist, if so, add a 1 to the end. loop until it doesn't exist.
@@ -478,10 +484,9 @@ public class User {
         dailyTransactions1.add(toWriteToFile);
     }
 
-
     @Override
     public String toString() {
         return String.format("Username: %s\r\nUserType: %s\r\n", 
         this.username, this.userType);
-}
+    }
 }

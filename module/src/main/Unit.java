@@ -17,7 +17,9 @@ public class Unit {
         this.city = city;
         this.numberOfBedrooms = numberOfBedrooms;
         this.rentalPricePerNight = rentalPricePerNight; 
-        this.rentalFlag = Boolean.valueOf(rentalFlag);
+        if (rentalFlag.equals("t")){
+            this.rentalFlag = true; 
+        } else {this.rentalFlag = false; }
         this.numberOfNightsRemanining = numberOfNightsRemanining;
     }
 

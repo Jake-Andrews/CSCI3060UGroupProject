@@ -32,6 +32,9 @@ public class Parser {
             int numberOfBedrooms = Integer.parseInt(splitLine[3]);
             float rentalPricePerNight = Float.parseFloat(splitLine[4]);
             String rentalFlag = splitLine[5];
+            if (splitLine[5].equals("t")){
+                rentalFlag = "true";
+            } else {rentalFlag = "false";}
             int numberOfNightsRemanining = Integer.parseInt(splitLine[6]);
 
             Unit rental = new Unit(rentID, username, city, numberOfBedrooms, rentalPricePerNight, rentalFlag, numberOfNightsRemanining);
@@ -48,9 +51,14 @@ public class Parser {
             String trimmed = line.trim().replaceAll("_{2,}", "_").trim();
             //Since there are only one _ between words, split based on _ 
             String[] splitLine = trimmed.split("_");
-
-            String username = splitLine[0];
-            String userType = splitLine[1];
+            String username = ""; 
+            String userType = "";
+            if (splitLine[0] != null) {
+                username = splitLine[0];
+            } 
+            if (splitLine[1] != null) {
+                userType = splitLine[1];
+            } 
 
             User user = new User(username, userType, rentalsFile, userAccountsFile);
             users.add(user);
@@ -74,7 +82,7 @@ public class Parser {
     //Have to re-read from the file, since if the current user posted a rental, the rental wont be in the 
     //arraylist rentals, but it will be in the file
     //Writes the rent to a file, changing rentflag and nightsremaining for the given rentID
-    public static void writePurchaseToRentalsFile(String rentID, int nights, String rentalsFile,String  userAccountsFile) throws FileNotFoundException{
+    public static void writePurchaseToRentalsFile(String rentID, int nights, String rentalsFile, String  userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
         ArrayList<String> fileContents = readFileIntoArrayList(rentalsFile);
 
@@ -82,9 +90,9 @@ public class Parser {
         //change the number of nights remaining and the rental flag
         //add the lines to a list Lines
         List<String> lines = new ArrayList<>();
-        for (String user: fileContents){
+        for (String lineInFile: fileContents){
             //remove two or more _ and replace with one _
-            String trimmed = user.trim().replaceAll("_{2,}", "_").trim();
+            String trimmed = lineInFile.trim().replaceAll("_{2,}", "_").trim();
             //Since there are only one _ between words, split based on _ 
             String[] line = trimmed.split("_");
 
@@ -94,48 +102,69 @@ public class Parser {
             String numberOfBedrooms = line[3];
             String rentalPricePerNight = line[4];
             String rentalFlag = line[5];
-            String numberOfNightsRemaining = line[6];
+            int numberOfNightsRemaining = Integer.parseInt(line[6]);
 
             if (rentID.equals(fileRentID)) {
-                String lineToWrite= fileRentID + "__";
+                String lineToWrite= fileRentID + "_";
                 lineToWrite += username;
-                    for (int i = 0; i < (17 - username.length()); i ++) {
-                        lineToWrite += "_";
-                    }
-                lineToWrite += city;
-                for (int i = 0; i < (27 - city.length()); i ++) {
+                for (int i = 0; i < (14 - username.length()); i ++) {
                     lineToWrite += "_";
                 }
-                lineToWrite += numberOfBedrooms + "__";
-                lineToWrite += rentalPricePerNight;
-                for (int i = 0; i < (8 - rentalPricePerNight.length()); i++) {
-                    lineToWrite += "_";
-                }
-                lineToWrite += "true___" + nights;
+                lineToWrite += "_";
 
-                //System.out.println(lineToWrite);
+                lineToWrite += city;
+                for (int i = 0; i < (25 - city.length()); i ++) {
+                    lineToWrite += "_";
+                }
+                lineToWrite += "_";
+
+                lineToWrite += numberOfBedrooms + "_";
+
+                lineToWrite += rentalPricePerNight;
+                for (int i = 0; i < (6 - rentalPricePerNight.length()); i++) {
+                    lineToWrite += "_";
+                }
+                lineToWrite += "_";
+                lineToWrite += "t_";
+                if (nights > 9 && nights < 100){
+                    lineToWrite += Integer.toString(nights); 
+                } else {
+                    String rightJustified = "0" + Integer.toString(nights);
+                    lineToWrite += rightJustified;
+                }   
+
                 lines.add(lineToWrite);
             }
             else {
-                String lineToWrite= fileRentID + "__";
+                String lineToWrite= fileRentID + "_";
                 lineToWrite += username;
-                    for (int i = 0; i < (17 - username.length()); i ++) {
-                        lineToWrite += "_";
-                    }
+                for (int i = 0; i < (14 - username.length()); i ++) {
+                    lineToWrite += "_";
+                }
+                lineToWrite += "_";
+
                 lineToWrite += city;
-                for (int i = 0; i < (27 - city.length()); i ++) {
+                for (int i = 0; i < (25 - city.length()); i ++) {
                     lineToWrite += "_";
                 }
-                lineToWrite += numberOfBedrooms + "__";
+                lineToWrite += "_";
+
+                lineToWrite += numberOfBedrooms + "_";
+
                 lineToWrite += rentalPricePerNight;
-                for (int i = 0; i < (8 - rentalPricePerNight.length()); i++) {
+                for (int i = 0; i < (6 - rentalPricePerNight.length()); i++) {
                     lineToWrite += "_";
                 }
+                lineToWrite += "_";
                 lineToWrite += rentalFlag;
-                for (int i = 0; i < (7 - rentalFlag.length()); i ++) {
-                    lineToWrite += "_";
-                }
-                lineToWrite += numberOfNightsRemaining;
+                lineToWrite += "_";
+
+                if (numberOfNightsRemaining > 9 && numberOfNightsRemaining < 100){
+                    lineToWrite += Integer.toString(numberOfNightsRemaining); 
+                } else {
+                    String rightJustified = "0" + Integer.toString(numberOfNightsRemaining);
+                    lineToWrite += rightJustified;
+                }   
                 
                 //System.out.println(lineToWrite);
                 lines.add(lineToWrite);
