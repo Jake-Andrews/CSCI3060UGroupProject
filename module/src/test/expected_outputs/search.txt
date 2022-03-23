@@ -32,3 +32,4 @@ Printing Daily Transactions:04_USER_____________AA__113142f7__Whitby____________
 You have been successfully logged out!
 Welcome, please login to use the program.
 To exit type exit, To start type login:
+Thank you for using our program!
