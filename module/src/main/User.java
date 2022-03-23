@@ -112,7 +112,7 @@ public class User {
         System.out.println("You have been successfully logged out!"); 
     }
     public boolean invalidUsername(String username){
-        if (!(username.length() <= 15) || !(username.matches("[a-zA-Z0-9 ]*"))){
+        if (!(username.length() < 15) || !(username.matches("[a-zA-Z0-9 ]*"))){
             System.out.println("Error, the username " + username + " is invalid. Usernames must contain less than 15 characters and alphanumeric characters!");
             return true; 
         }   
@@ -168,7 +168,7 @@ public class User {
             }
 
             // Prevent user from deleting current user's account
-            if (!username.equals(this.username)) {
+            if (!deletingUsername.equals(this.username)) {
                 System.out.println("Deleting user: " + username);
                 doneDeleting = true;
                 try {
@@ -298,7 +298,7 @@ public class User {
         //string needs to be 15 units long, subtract 2 for usertype.
         //Therefore, take length of username and subtract from 13 for the number of _ needed
         String toWriteToFile = newUsername;
-        int underscoresNeeded = 17 - newUsername.length();
+        int underscoresNeeded = 18 - newUsername.length();
         
         for (int i = 0; i < underscoresNeeded; i ++){
             toWriteToFile = toWriteToFile + "_";
