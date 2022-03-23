@@ -196,7 +196,7 @@ public class User {
         do {
             city = test.getGenericInput("Please enter the city where the unit you are renting is: ");
             city.toLowerCase();
-        } while (!(city.matches("[a-zA-Z[-\\s]]+") || city.length() > 25));                 // City must have only letters from the alphabet (no numbers or special characters)
+        } while (city.length() > 25 || (!(city.matches("[a-zA-Z[-\\s]]+"))));                 // City must have only letters from the alphabet (no numbers or special characters)
         city = city.substring(0, 1).toUpperCase() + city.substring(1);                      // Capatize first letter of cities
         // Get a renting price from user
         do {
@@ -231,7 +231,7 @@ public class User {
         do {
             city = test.getGenericInput("Please enter the city where the unit you are renting is: ");
             city.toLowerCase();
-        } while (!(city.matches("[a-zA-Z[-\\s]]+") || city.length() > 25));                 // City must have only letters from the alphabet (no numbers or special characters)
+        } while ((!(city.matches("[a-zA-Z[-\\s]]+")) && city.length() > 25));                 // City must have only letters from the alphabet (no numbers or special characters)
         city = city.substring(0, 1).toUpperCase() + city.substring(1);                      // Capatize first letter of cities, since search is case sensitive
         
         do {

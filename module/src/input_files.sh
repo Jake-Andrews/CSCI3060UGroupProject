@@ -23,5 +23,5 @@ echo -n "a943c2b3_USER___________Toronto___________________3_400.00_f_00" >> ava
 #loop through all the files in the inputs folder
 for file in $parent_path/test/inputs/*; do 
     echo "running test ${file##*/}" 
-    java -cp . main/Main.java availablerentalsfile.txt useraccounts.txt dailytransactionsfile.txt < $file > $parent_path/test/outputs/${file##*/} #${file##*/} contains the filename
+    java -cp . main/Main availablerentalsfile.txt useraccounts.txt dailytransactionsfile.txt < $file > $parent_path/test/outputs/${file##*/} #${file##*/} contains the filename
 done

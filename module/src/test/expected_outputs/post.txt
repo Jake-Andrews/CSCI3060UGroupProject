@@ -12,13 +12,13 @@ Please enter a valid price to rent the unit at (max is 999.99):
 Please enter the number of bedrooms (max is 9): 
 
 Creating unit now!
-Daily transaction file string: 03_USER_____________AA__117fb1bf__Toronto____________________5__500.0___0
+Daily transaction file string: 03_USER_____________AA__(ID)______Toronto____________________5__500.0___0
 
 Please enter a command!
 For a list of commands type 'help':
 Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
 
-Printing Daily Transactions:03_USER_____________AA__117fb1bf__Toronto____________________5__500.0___0
+Printing Daily Transactions:03_USER_____________AA__(ID)______Toronto____________________5__500.0___0
 00_USER_____________AA_______________________________0__0.0_____0
 You have been successfully logged out!
 Welcome, please login to use the program.
