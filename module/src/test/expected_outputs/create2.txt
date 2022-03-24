@@ -12,13 +12,13 @@ Please enter a valid username:
 Please enter a valid usertype: 
 Creating the user: USER531 with a usertype of: AA
 User created!
-Daily transaction file string: 01_USER_____________AA_______________________________0__0.0_____0
+Daily transaction file string: 01_USER___________AA____________________________________0_0.00___00
 
 Please enter a command!
-For a list of commands type 'help': Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
+For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________________0_0.00___00
 
-Printing Daily Transactions:01_USER_____________AA_______________________________0__0.0_____0
-00_USER_____________AA_______________________________0__0.0_____0
+Printing Daily Transactions:01_USER___________AA____________________________________0_0.00___00
+00_USER___________AA____________________________________0_0.00___00
 You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!

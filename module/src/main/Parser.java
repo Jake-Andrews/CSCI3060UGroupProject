@@ -124,6 +124,7 @@ public class Parser {
                 for (int i = 0; i < (6 - rentalPricePerNight.length()); i++) {
                     lineToWrite += "_";
                 }
+
                 lineToWrite += "_";
                 lineToWrite += "t_";
                 if (nights > 9 && nights < 100){

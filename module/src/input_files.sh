@@ -17,7 +17,8 @@ echo    "USER01_________AA" >> useraccounts.txt
 echo    "USER011________FS" >> useraccounts.txt
 echo    "USER02_________FS" >> useraccounts.txt 
 echo    "USER03_________RS" >> useraccounts.txt
-echo -n "USER04_________PS" >> useraccounts.txt #don't append new line character
+echo    "USER04_________PS" >> useraccounts.txt
+echo -n "USER05_________PS" >> useraccounts.txt #don't append new line character
 
 #overwriting availablerentalsfile.txt
 echo    "e6a5a8ec_USER___________Toronto___________________4_450.00_t_03" > availablerentalsfile.txt #> to rewrite the file

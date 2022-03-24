@@ -16,7 +16,6 @@ rentalPricePerNight: 400.00
 rentalFlag: false
 numberOfNightsRemaining: 0
 
-400.00
 Daily transaction file string: 04_USER___________AA_a943c2b1_Toronto___________________3_400.00_00
 rentID: a943c2b2
 Username: USER
@@ -26,7 +25,6 @@ rentalPricePerNight: 400.00
 rentalFlag: false
 numberOfNightsRemaining: 14
 
-400.00
 Daily transaction file string: 04_USER___________AA_a943c2b2_Toronto___________________3_400.00_14
 rentID: a943c2b3
 Username: USER
@@ -36,12 +34,10 @@ rentalPricePerNight: 400.00
 rentalFlag: false
 numberOfNightsRemaining: 0
 
-400.00
 Daily transaction file string: 04_USER___________AA_a943c2b3_Toronto___________________3_400.00_00
 
 Please enter a command!
-For a list of commands type 'help': 0.00
-Daily transaction file string: 00_USER___________AA____________________________________0_0.00___00
+For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________________0_0.00___00
 
 Printing Daily Transactions:04_USER___________AA_a943c2b1_Toronto___________________3_400.00_00
 04_USER___________AA_a943c2b2_Toronto___________________3_400.00_14

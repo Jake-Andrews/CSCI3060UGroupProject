@@ -1,37 +1,48 @@
 Welcome, please login to use the program. 
 To exit type exit, To start type login: 
-
-Please enter a valid username:
-
+Please enter a valid username: 
 You have been logged in!
 
 Please enter a command!
-For a list of commands type 'help': search
-Please enter the city where the unit you are renting is: 
-
+For a list of commands type 'help': Please enter the city where the unit you are renting is: 
 Please enter a valid price to rent the unit at (max is 999.99): 
-
 Please enter a valid price to rent the unit at (max is 999.99): 
-
 Please enter the number of bedrooms (max is 9): 
-
-rentID: a943c2b3
-Username: USER  
+rentID: a943c2b1
+Username: USER
 City: Toronto
 numberOfBedrooms: 3
 rentalPricePerNight: 400.00
 rentalFlag: false
 numberOfNightsRemaining: 0
 
-Daily transaction file string: 04_USER___________AA_a943c2b3_Toronto___________________3_400.0_00
+Daily transaction file string: 04_USER___________AA_a943c2b1_Toronto___________________3_400.00_00
+rentID: a943c2b2
+Username: USER
+City: Toronto
+numberOfBedrooms: 3
+rentalPricePerNight: 400.00
+rentalFlag: false
+numberOfNightsRemaining: 14
+
+Daily transaction file string: 04_USER___________AA_a943c2b2_Toronto___________________3_400.00_14
+rentID: a943c2b3
+Username: USER
+City: Toronto
+numberOfBedrooms: 3
+rentalPricePerNight: 400.00
+rentalFlag: false
+numberOfNightsRemaining: 0
+
+Daily transaction file string: 04_USER___________AA_a943c2b3_Toronto___________________3_400.00_00
 
 Please enter a command!
-For a list of commands type 'help':
-Daily transaction file string: 00_USER___________AA____________________________0_0.0___00
+For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________________0_0.00___00
 
-Printing Daily Transactions:04_USER___________AA_a943c2b3_Toronto___________________3_400.0_00
-00_USER___________AA____________________________0_0.0___00
+Printing Daily Transactions:04_USER___________AA_a943c2b1_Toronto___________________3_400.00_00
+04_USER___________AA_a943c2b2_Toronto___________________3_400.00_14
+04_USER___________AA_a943c2b3_Toronto___________________3_400.00_00
+00_USER___________AA____________________________________0_0.00___00
 You have been successfully logged out!
-Welcome, please login to use the program.
-To exit type exit, To start type login:
-Thank you for using our program!
+Welcome, please login to use the program. 
+To exit type exit, To start type login: Thank you for using our program!

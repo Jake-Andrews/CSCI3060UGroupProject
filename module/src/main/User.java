@@ -287,6 +287,9 @@ public class User {
             System.out.println("Processing your order!");
             try {
                 Parser.writePurchaseToRentalsFile(rentID, nights, rentalsFile, userAccountsFile);
+                rental.setNumberOfNightsRemanining(nights);
+                rental.setRentalFlag(true);
+
                 addToTransactionArrayList("05", rental);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -456,7 +459,6 @@ public class User {
 
     private void addToTransactionArrayList(String command, Unit unit) {
         //01-create, 02-delete, 03-post, 04-search, 05-rent, 00-end of session
-
         String toWriteToFile = command + "_";
 
         //adding username then filling in the possible empty spaces
@@ -483,15 +485,11 @@ public class User {
         toWriteToFile += "_";
 
         toWriteToFile += Integer.toString(unit.getNumberOfBedrooms()) + "_";
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setMaximumFractionDigits(2);
+        toWriteToFile += df.format(unit.getRentalPricePerNight());
 
-        String [] partsOfFloat = Float.toString(unit.getRentalPricePerNight()).split("\\.");
-        String properDecimal = "";
-        if (partsOfFloat[1].length() <= 1) {
-            properDecimal = Float.toString(unit.getRentalPricePerNight()) + "0";
-            toWriteToFile += properDecimal;
-        } else {unit.getRentalPricePerNight();}
-
-        for (int i = 0; i < (5 - (String.valueOf(unit.getRentalPricePerNight())).length()); i++) {
+        for (int i = 0; i < (6 - (String.valueOf(df.format(unit.getRentalPricePerNight()))).length()); i++) {
             toWriteToFile += "_";
         }
         toWriteToFile += "_";

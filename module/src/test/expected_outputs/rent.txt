@@ -9,14 +9,14 @@ Please enter a valid number of nights (integer value, minimum of 1, max of 14):
 Are you sure you want to book 117fb1bf with a price per night of $500.0 , and a total cost of $7000?
 Type 'yes' to accept or 'no' to decline: 
 Processing your order!
-Daily transaction file string: 05_USER_____________AA__117fb1bf__Toronto____________________5__500.0___0
+Daily transaction file string: 05_USER___________AA_117fb1bf_Toronto___________________5_500.00_00
 Your order has been completed!
 
 Please enter a command!
-For a list of commands type 'help': Daily transaction file string: 00_USER_____________AA_______________________________0__0.0_____0
+For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________________0_0.00___00
 
-Printing Daily Transactions:05_USER_____________AA__117fb1bf__Toronto____________________5__500.0___0
-00_USER_____________AA_______________________________0__0.0_____0
+Printing Daily Transactions:05_USER___________AA_117fb1bf_Toronto___________________5_500.00_00
+00_USER___________AA____________________________________0_0.00___00
 You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!
