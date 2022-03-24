@@ -58,7 +58,6 @@ public class User {
                     this.loggedIn = false;
                     Unit unit = new Unit("", "", "", 000000, 0, "", 00);
                     addToTransactionArrayList("00", unit);
-                    writeToTransactionFile();
                     System.out.print("\nPrinting Daily Transactions:");
                     for (String transaction: dailyTransactions1) {
                         System.out.println(transaction);
@@ -412,34 +411,9 @@ public class User {
             out.print(toWriteToFile);
         } catch (IOException e) {}
     }
-    //Checking to see what number to append to the end of the transactionfile name
-    //Does the file exist, if so, add a 1 to the end. loop until it doesn't exist.
-    private void writeToTransactionFile(){
-        File f = new File(transactionsFile);
-        //getting filename from path
-        String fileNameWithoutPath = f.getName();
-        //removing .
-        String fileNameWithoutExtension = fileNameWithoutPath.replaceFirst("[.][^.]+$", "");
-        fileNameWithoutExtension = fileNameWithoutExtension.replaceFirst(".$","");
-        int counter = 0;
-        String filename = transactionsFile; 
-        //check if file exists, if it does, add a 1 to the end, loop until file doesn't exist
-        while(f.isFile()){ 
-            counter++;
-            filename = fileNameWithoutExtension + Integer.toString(counter) + ".txt";
-            f = new File(filename); 
-        } 
-        //writing to a file
-        try (FileWriter fw = new FileWriter(filename, true)) {
-            for (String transaction : dailyTransactions1) {
-                fw.write(transaction + System.lineSeparator());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void addToTransactionArrayList(String command, Unit rental){
+        Parser.addToTransactionArrayList(command, rental, this.username, this.userType);
     }
-        
-
     // Generate a unique String to identify units
     private String generateUnitID() {
         String id = UUID.randomUUID().toString();
@@ -455,55 +429,6 @@ public class User {
             }
         }  
         return null;
-    }
-
-    private void addToTransactionArrayList(String command, Unit unit) {
-        //01-create, 02-delete, 03-post, 04-search, 05-rent, 00-end of session
-        String toWriteToFile = command + "_";
-
-        //adding username then filling in the possible empty spaces
-        toWriteToFile += this.username;
-        for (int i = 0; i < (14 - this.username.length()); i ++) {
-            toWriteToFile += "_";
-        }
-        toWriteToFile += "_"; //seperating username and usertype
-
-        toWriteToFile += this.userType + "_";
-
-        //if there is no rentid (logout, etc...) add 9 spaces, 8 for rent id, one for space between items
-        if (unit.getRentID().isEmpty()){
-            for (int i = 0; i < 9; i ++){
-                toWriteToFile += "_";
-            }
-        }
-        else {toWriteToFile += unit.getRentID() + "_";}
-
-        toWriteToFile += unit.getCity();
-        for (int i = 0; i < (25 - unit.getCity().length()); i ++) {
-            toWriteToFile += "_";
-        }
-        toWriteToFile += "_";
-
-        toWriteToFile += Integer.toString(unit.getNumberOfBedrooms()) + "_";
-        DecimalFormat df = new DecimalFormat("0.00");
-        df.setMaximumFractionDigits(2);
-        toWriteToFile += df.format(unit.getRentalPricePerNight());
-
-        for (int i = 0; i < (6 - (String.valueOf(df.format(unit.getRentalPricePerNight()))).length()); i++) {
-            toWriteToFile += "_";
-        }
-        toWriteToFile += "_";
-
-        //if the number of nights is a double digit
-        if (unit.getNumberOfNightsRemanining() > 9 && unit.getNumberOfNightsRemanining() < 100){
-            toWriteToFile += Integer.toString(unit.getNumberOfNightsRemanining()); 
-        } else {
-            String rightJustified = "0" + Integer.toString(unit.getNumberOfNightsRemanining());
-            toWriteToFile += rightJustified;
-        }   
-
-        System.out.println("Daily transaction file string: " + toWriteToFile);
-        dailyTransactions1.add(toWriteToFile);
     }
 
     @Override

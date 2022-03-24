@@ -2,11 +2,13 @@ package main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +18,9 @@ import java.util.Scanner;
 public class Parser {
     public static ArrayList<Unit> rentals = new ArrayList<Unit>(); 
     public static ArrayList<User> users = new ArrayList<User>();
+    public static ArrayList<String> dailyTransactions1 = new ArrayList<String>();
     public final static Scanner sc = new Scanner(System.in); 
+    public static String transactionsFile = "dailytransactionsfile1.txt";
 
     public static void readAvailableRentalsFile(String rentalsFile,String  userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
@@ -181,5 +185,81 @@ public class Parser {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+        //Checking to see what number to append to the end of the transactionfile name
+    //Does the file exist, if so, add a 1 to the end. loop until it doesn't exist.
+    public static void writeToTransactionFile(){
+        File f = new File(transactionsFile);
+        //getting filename from path
+        String fileNameWithoutPath = f.getName();
+        //removing .
+        String fileNameWithoutExtension = fileNameWithoutPath.replaceFirst("[.][^.]+$", "");
+        fileNameWithoutExtension = fileNameWithoutExtension.replaceFirst(".$","");
+        int counter = 0;
+        String filename = transactionsFile; 
+        //check if file exists, if it does, add a 1 to the end, loop until file doesn't exist
+        while(f.isFile()){ 
+            counter++;
+            filename = fileNameWithoutExtension + Integer.toString(counter) + ".txt";
+            f = new File(filename); 
+        } 
+        //writing to a file
+        try (FileWriter fw = new FileWriter(filename, true)) {
+            for (String transaction : dailyTransactions1) {
+                fw.write(transaction + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addToTransactionArrayList(String command, Unit unit, String username, String userType) {
+        //01-create, 02-delete, 03-post, 04-search, 05-rent, 00-end of session
+        String toWriteToFile = command + "_";
+
+        //adding username then filling in the possible empty spaces
+        toWriteToFile += username;
+        for (int i = 0; i < (14 - username.length()); i ++) {
+            toWriteToFile += "_";
+        }
+        toWriteToFile += "_"; //seperating username and usertype
+
+        toWriteToFile += userType + "_";
+
+        //if there is no rentid (logout, etc...) add 9 spaces, 8 for rent id, one for space between items
+        if (unit.getRentID().isEmpty()){
+            for (int i = 0; i < 9; i ++){
+                toWriteToFile += "_";
+            }
+        }
+        else {toWriteToFile += unit.getRentID() + "_";}
+
+        toWriteToFile += unit.getCity();
+        for (int i = 0; i < (25 - unit.getCity().length()); i ++) {
+            toWriteToFile += "_";
+        }
+        toWriteToFile += "_";
+
+        toWriteToFile += Integer.toString(unit.getNumberOfBedrooms()) + "_";
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setMaximumFractionDigits(2);
+        toWriteToFile += df.format(unit.getRentalPricePerNight());
+
+        for (int i = 0; i < (6 - (String.valueOf(df.format(unit.getRentalPricePerNight()))).length()); i++) {
+            toWriteToFile += "_";
+        }
+        toWriteToFile += "_";
+
+        //if the number of nights is a double digit
+        if (unit.getNumberOfNightsRemanining() > 9 && unit.getNumberOfNightsRemanining() < 100){
+            toWriteToFile += Integer.toString(unit.getNumberOfNightsRemanining()); 
+        } else {
+            String rightJustified = "0" + Integer.toString(unit.getNumberOfNightsRemanining());
+            toWriteToFile += rightJustified;
+        }   
+
+        System.out.println("Daily transaction file string: " + toWriteToFile);
+        dailyTransactions1.add(toWriteToFile);
     }
 }

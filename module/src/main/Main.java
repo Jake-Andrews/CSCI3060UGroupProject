@@ -16,11 +16,6 @@ public class Main {
         //gets user to type login, then type their username, validates that the usernameis in the useraccounts.txt file
         //then create user class and calls user.getcommands() to accept commands from the user until they type logout
     public static void main(String[] args) {
-        //ot-bnb users.txt rental-units.txt transout.atf
-        //if (args.length <=2){
-        //    System.out.println("Incorrect usage! Proper usage: Main availablerentalsfile.txt useraccounts.txt dailytransactionsfile.txt");
-        //    System.exit(0);
-        //}
 
         String rentalsFile = new File(args[0]).getAbsolutePath();
         String userAccountsFile = new File(args[1]).getAbsolutePath();
@@ -33,6 +28,7 @@ public class Main {
                 userInput = Parser.sc.nextLine();
                 if (userInput.equalsIgnoreCase("exit")){
                     System.out.print("Thank you for using our program!");
+                    Parser.writeToTransactionFile();
                     Parser.sc.close();
                     System.exit(0);
                 }
@@ -53,6 +49,8 @@ public class Main {
                 System.out.print("\nPlease enter a valid username: ");
                 userInput = Parser.sc.nextLine();
                 if (userInput.equalsIgnoreCase("exit")){
+                    System.out.print("Thank you for using our program!");
+                    Parser.writeToTransactionFile();
                     System.exit(0);
                 }
             } while (!command.isUser(userInput)); //keep asking for a valid username while the username given is not a username in the useraccounts.txt file

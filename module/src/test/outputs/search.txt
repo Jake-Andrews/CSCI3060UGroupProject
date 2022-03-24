@@ -20,8 +20,6 @@ Daily transaction file string: 04_USER___________AA_113142f7_Whitby_____________
 Please enter a command!
 For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________________0_0.00___00
 
-Printing Daily Transactions:04_USER___________AA_113142f7_Whitby____________________2_300.00_00
-00_USER___________AA____________________________________0_0.00___00
-You have been successfully logged out!
+Printing Daily Transactions:You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!

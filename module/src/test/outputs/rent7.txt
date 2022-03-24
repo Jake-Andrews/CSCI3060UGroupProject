@@ -9,7 +9,6 @@ For a list of commands type 'help': ERROR: You cannot rent a unit on a post-stan
 Please enter a command!
 For a list of commands type 'help': Daily transaction file string: 00_USR1___________PS____________________________________0_0.00___00
 
-Printing Daily Transactions:00_USR1___________PS____________________________________0_0.00___00
-You have been successfully logged out!
+Printing Daily Transactions:You have been successfully logged out!
 Welcome, please login to use the program. 
 To exit type exit, To start type login: Thank you for using our program!
