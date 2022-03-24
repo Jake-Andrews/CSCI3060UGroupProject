@@ -8,7 +8,7 @@ For a list of commands type 'help': Please enter the city where the unit you are
 Please enter a valid price to rent the unit at (max is 999.99): 
 Please enter the number of bedrooms (max is 9): 
 Creating unit now!
-Daily transaction file string: 03_USER___________AA_84cd571f_Toronto___________________5_500.00_00
+Daily transaction file string: 03_USER___________AA_12d80136_Toronto___________________5_500.00_00
 
 Please enter a command!
 For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________________0_0.00___00
