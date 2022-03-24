@@ -168,8 +168,10 @@ public class User {
             }
 
             // Prevent user from deleting current user's account
-            if (!deletingUsername.equals(this.username)) {
+            if (!deletingUsername.equals(this.username) && !test.isAdmin(deletingUsername)) {
                 System.out.println("Deleting user: " + deletingUsername);
+                //System.out.println(!deletingUsername.equals(this.username));
+                //System.out.println(!test.isAdmin(deletingUsername));
                 doneDeleting = true;
                 try {
                     deleteFromAccountsFile(deletingUsername);
@@ -375,7 +377,6 @@ public class User {
         String properDecimal = "";
         if (partsOfFloat[1].length() <= 1) {
             properDecimal = Float.toString(newUnit.getRentalPricePerNight()) + "0";
-            System.out.println(properDecimal);
             toWriteToFile += properDecimal;
         } else {newUnit.getRentalPricePerNight();}
 
@@ -483,7 +484,6 @@ public class User {
         String properDecimal = "";
         if (partsOfFloat[1].length() <= 1) {
             properDecimal = Float.toString(unit.getRentalPricePerNight()) + "0";
-            System.out.println(properDecimal);
             toWriteToFile += properDecimal;
         } else {unit.getRentalPricePerNight();}
 

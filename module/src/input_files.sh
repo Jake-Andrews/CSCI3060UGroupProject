@@ -4,8 +4,21 @@ parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path" #change directory to the scripts directory
 find -type f -name '*dailytransactionsfile*' -delete #delete any file that matches the string provided
 
-#overwriting useracounts.txt file, so we have the same starting state for every run of tests
-printf "UUUUUUUUUU________AA\nUSER______________AA\nUSR_______________PS\nUSR1______________PS\nUSER2_____________AA\nUSER3_____________FS\nUSER123__________AA\nUSER_____________AA" > useraccounts.txt 
+#overwriting useracounts.txt file, so we have the same starting state for every run of tests 
+echo    "UUUUUUUUUU_____AA" > useraccounts.txt #> overwrites
+echo    "USER___________AA" >> useraccounts.txt #>> appends
+echo    "USR____________PS" >> useraccounts.txt
+echo    "USR1___________PS" >> useraccounts.txt
+echo    "USER2__________AA" >> useraccounts.txt
+echo    "USER3__________FS" >> useraccounts.txt
+echo    "USER123________AA" >> useraccounts.txt
+echo    "USER___________AA" >> useraccounts.txt
+echo    "USER01_________AA" >> useraccounts.txt
+echo    "USER011________FS" >> useraccounts.txt
+echo    "USER02_________FS" >> useraccounts.txt 
+echo    "USER03_________RS" >> useraccounts.txt
+echo -n "USER04_________PS" >> useraccounts.txt #don't append new line character
+
 #overwriting availablerentalsfile.txt
 echo    "e6a5a8ec_USER___________Toronto___________________4_450.00_t_03" > availablerentalsfile.txt #> to rewrite the file
 echo    "113142f7_USER___________Whitby____________________2_300.00_f_00" >> availablerentalsfile.txt #>> instead of > to append

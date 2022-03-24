@@ -37,8 +37,11 @@ public class CommandLine {
 
         //loop through the arraylist, find the username given, check if they are an admin
         for (String user: fileContents){
-            String[] line = user.split("_");
+            String trimmed = user.trim().replaceAll("_{2,}", "_").trim();
+            String[] line = trimmed.split("_");
+            //System.out.println(line[0]);
             if (username.equals(line[0])) {
+                //System.out.println(line[1]);
                 if ("AA".equals(line[1])) {
                     return true; 
                 } 
