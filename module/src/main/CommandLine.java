@@ -1,7 +1,6 @@
 package main;
 import java.util.ArrayList;
-//class that handles all the command line dialogue with the user
-//also handles sanitizing input
+
 public class CommandLine {
     //list of valid commands
     public static String[] validCommands = {"login", "logout", "create", "delete", "post", "search", "rent"};

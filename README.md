@@ -1,6 +1,8 @@
 # CSCI3060UGroupProject
 How to use: 
-First, compile the java files. You can do this by cd'ing into the main directory and using: "javac *.java". 
+
+Open the program by opening the "CSCSI3060uGROUPPROJECT" folder in vscode or another editor. 
+Next, compile the java files. You can do this by cd'ing into the main directory and using: "javac *.java". 
 Next, run the program through Main.java, you can do this by cd'ing to src and running: java -cp . main/Main.java availablerentalsfile.txt useraccounts.txt
 
 To run tests: 
