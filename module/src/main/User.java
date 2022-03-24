@@ -167,20 +167,24 @@ public class User {
                 System.out.println("The user: " + deletingUsername + " exists in our system!");
             }
 
-            // Prevent user from deleting current user's account
-            if (!deletingUsername.equals(this.username) && !test.isAdmin(deletingUsername)) {
+            // Prevent user from deleting current user's account or an admin's account
+            if (deletingUsername.equals(this.username)) {
+                System.out.println("Error you cannot delete your own account!");
+                continue;
+            } 
+            else if (test.isAdmin(deletingUsername)) {
+                System.out.println("Error you cannot delete an admin's account!");
+                continue;
+            }
+            else {                
                 System.out.println("Deleting user: " + deletingUsername);
-                //System.out.println(!deletingUsername.equals(this.username));
-                //System.out.println(!test.isAdmin(deletingUsername));
                 doneDeleting = true;
                 try {
                     deleteFromAccountsFile(deletingUsername);
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                }
-
-            } else { System.out.println("ERROR: You cannot delete your own account!"); }
+                }}
         } while (!doneDeleting);
 
         Unit unit = new Unit("", "", "", 0, 0, "", 0);
