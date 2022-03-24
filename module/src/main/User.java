@@ -370,8 +370,15 @@ public class User {
         toWriteToFile += "_";
 
         toWriteToFile += newUnit.getNumberOfBedrooms() + "_";
+        //split based on period, if theres only one number, add a 0 infront of it (500.0) add 0 -> (500.00)
+        String [] partsOfFloat = Float.toString(newUnit.getRentalPricePerNight()).split("\\.");
+        String properDecimal = "";
+        if (partsOfFloat[1].length() <= 1) {
+            properDecimal = Float.toString(newUnit.getRentalPricePerNight()) + "0";
+            System.out.println(properDecimal);
+            toWriteToFile += properDecimal;
+        } else {newUnit.getRentalPricePerNight();}
 
-        toWriteToFile += newUnit.getRentalPricePerNight();
         for (int i = 0; i < (6 - (String.valueOf(newUnit.getRentalPricePerNight())).length()); i++) {
             toWriteToFile += "_";
         }
@@ -472,7 +479,14 @@ public class User {
 
         toWriteToFile += Integer.toString(unit.getNumberOfBedrooms()) + "_";
 
-        toWriteToFile += String.valueOf(unit.getRentalPricePerNight());
+        String [] partsOfFloat = Float.toString(unit.getRentalPricePerNight()).split("\\.");
+        String properDecimal = "";
+        if (partsOfFloat[1].length() <= 1) {
+            properDecimal = Float.toString(unit.getRentalPricePerNight()) + "0";
+            System.out.println(properDecimal);
+            toWriteToFile += properDecimal;
+        } else {unit.getRentalPricePerNight();}
+
         for (int i = 0; i < (5 - (String.valueOf(unit.getRentalPricePerNight())).length()); i++) {
             toWriteToFile += "_";
         }
