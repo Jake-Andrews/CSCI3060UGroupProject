@@ -1,0 +1,7 @@
+login
+USER
+create
+USER1131
+PS
+logout
+exit

@@ -1,9 +1,0 @@
-login
-USER
-search
-Toronto
-1000.0
-400.0
-3
-logout
-exit

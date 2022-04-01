@@ -1,0 +1,9 @@
+login
+USER
+post
+Llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch
+Toronto
+500.00
+5
+logout
+exit

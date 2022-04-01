@@ -1,0 +1,9 @@
+login
+USER
+rent
+91da4934
+a943c2b1
+14
+yes
+logout
+exit

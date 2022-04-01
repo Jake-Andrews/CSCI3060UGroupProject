@@ -1,0 +1,5 @@
+login
+USR1
+rent
+logout
+exit

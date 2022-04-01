@@ -1,9 +1,0 @@
-login
-USER
-rent
-ae3e68e7
-abc
-14
-yes
-logout
-exit

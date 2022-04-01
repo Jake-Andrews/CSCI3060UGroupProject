@@ -1,0 +1,8 @@
+login
+USER
+rent
+a943c2b3
+14
+no
+logout
+exit

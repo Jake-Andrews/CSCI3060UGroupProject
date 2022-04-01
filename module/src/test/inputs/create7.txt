@@ -1,7 +1,0 @@
-login
-USER
-create
-USER1031
-RS
-logout
-exit

@@ -1,0 +1,8 @@
+login
+USER
+create
+USER831
+GG
+AA
+logout
+exit

@@ -1,0 +1,5 @@
+login
+USER3
+create
+logout
+exit
