@@ -322,7 +322,7 @@ public class User {
         }
         //reading the new useraccounts file into an arraylist for ease of use elsewhere in the program
         try {
-            Parser.readUserAccountsFile(rentalsFile, userAccountsFile);
+            Parser.readUserAccountsFile(new File(rentalsFile), new File(userAccountsFile));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -362,7 +362,7 @@ public class User {
     }
 
     // Add a new unit to current available rental units
-    public void writeToRentalsFile(Unit newUnit) {
+    public String writeToRentalsFile(Unit newUnit) {
         String toWriteToFile = newUnit.getRentID() + "_";
 
         toWriteToFile += newUnit.getUsername();
@@ -379,14 +379,18 @@ public class User {
 
         toWriteToFile += newUnit.getNumberOfBedrooms() + "_";
         //split based on period, if theres only one number, add a 0 infront of it (500.0) add 0 -> (500.00)
+        //999.99f
         String [] partsOfFloat = Float.toString(newUnit.getRentalPricePerNight()).split("\\.");
         String properDecimal = "";
         if (partsOfFloat[1].length() <= 1) {
             properDecimal = Float.toString(newUnit.getRentalPricePerNight()) + "0";
             toWriteToFile += properDecimal;
-        } else {newUnit.getRentalPricePerNight();}
+        } else {
+            toWriteToFile += Float.toString(newUnit.getRentalPricePerNight()); 
 
-        for (int i = 0; i < (6 - (String.valueOf(newUnit.getRentalPricePerNight())).length()); i++) {
+        }
+
+        for (int i = 0; i < (6 - (String.valueOf(String.format("%.2f",newUnit.getRentalPricePerNight()))).length()); i++) {
             toWriteToFile += "_";
         }
         toWriteToFile += "_";
@@ -410,7 +414,10 @@ public class User {
             out.println();
             out.print(toWriteToFile);
         } catch (IOException e) {}
+
+        return toWriteToFile;
     }
+
     public void addToTransactionArrayList(String command, Unit rental){
         Parser.addToTransactionArrayList(command, rental, this.username, this.userType);
     }

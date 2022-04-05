@@ -9,7 +9,7 @@ Please enter a valid price to rent the unit at (max is 999.99):
 Please enter a valid price to rent the unit at (max is 999.99): 
 Please enter the number of bedrooms (max is 9): 
 Creating unit now!
-Daily transaction file string: 03_USER___________AA_9499cb44_Toronto___________________5_500.00_00
+Daily transaction file string: 03_USER___________AA_9b467eef_Toronto___________________5_500.00_00
 
 Please enter a command!
 For a list of commands type 'help': Daily transaction file string: 00_USER___________AA____________________________________0_0.00___00

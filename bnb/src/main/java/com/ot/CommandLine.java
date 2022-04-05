@@ -7,20 +7,12 @@ public class CommandLine {
     public CommandLine() {}
 
     //given a username, will return their usertype
-    public String getUserType(String username, String filename) {
-        //puts lines from useraccounts.txt into arraylist
-        ArrayList<String> fileContents = Parser.readFileIntoArrayList(filename);
-
+    public String getUserType(String username) {
         //loop through the arraylist, find the username given, return their userType
-        for (String user: fileContents){
-            //remove two or more _ and replace with one _
-            String trimmed = user.trim().replaceAll("_{2,}", "_").trim();
-            //Since there are only one _ between words, split based on _ 
-            String[] line = trimmed.split("_");
-            
-            //if the username was found in the file, return usertype
-            if (username.equals(line[0])) {
-                return line[1];
+        for (User user: Parser.users){
+            //if the username was found in the arraylist, return usertype
+            if (username.equals(user.username)) {
+                return user.userType;
             } 
         }
         return "";    

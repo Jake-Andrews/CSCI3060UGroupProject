@@ -1,2 +1,0 @@
-Welcome, please login to use the program. 
-To exit type exit, To start type login: 

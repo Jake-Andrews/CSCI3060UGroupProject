@@ -22,9 +22,9 @@ public class Parser {
     public final static Scanner sc = new Scanner(System.in); 
     public static String transactionsFile = "dailytransactionsfile1.txt";
 
-    public static void readAvailableRentalsFile(String rentalsFile,String  userAccountsFile) throws FileNotFoundException{
+    public static void readAvailableRentalsFile(File rentalsFile, File userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
-        ArrayList<String> fileContents = readFileIntoArrayList(rentalsFile);
+        ArrayList<String> fileContents = readFileIntoArrayList(rentalsFile.getName());
         for (String line: fileContents){
             //remove two or more _ and replace with one _
             String trimmed = line.trim().replaceAll("_{2,}", "_").trim();
@@ -46,9 +46,9 @@ public class Parser {
         }
     }
 
-    public static void readUserAccountsFile(String rentalsFile, String  userAccountsFile) throws FileNotFoundException{
+    public static void readUserAccountsFile(File rentalsFile, File  userAccountsFile) throws FileNotFoundException{
         //puts lines from useraccounts.txt into arraylist
-        ArrayList<String> fileContents = readFileIntoArrayList(userAccountsFile);
+        ArrayList<String> fileContents = readFileIntoArrayList(userAccountsFile.getName());
 
         for (String line: fileContents){
             //remove two or more _ and replace with one _
@@ -64,7 +64,7 @@ public class Parser {
                 userType = splitLine[1];
             } 
 
-            User user = new User(username, userType, rentalsFile, userAccountsFile);
+            User user = new User(username, userType, rentalsFile.getName(), userAccountsFile.getName());
             users.add(user);
         }
     }

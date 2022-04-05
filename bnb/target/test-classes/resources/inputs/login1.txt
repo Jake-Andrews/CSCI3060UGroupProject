@@ -1,5 +1,0 @@
-login
-USER1234567
-USER
-logout
-exit

@@ -21,8 +21,8 @@ public class Main {
         //then create user class and calls user.getcommands() to accept commands from the user until they type logout
     public static void main(String[] args) {
         //both of the filenames entered by the user
-        String rentalsFile = args[0];
-        String userAccountsFile = args[1];
+        String rentalsFileName = args[0];
+        String userAccountsFileName = args[1];
         //getting the .jar files location regardless of where it's run, important for for the bash scripts
         String jarPath = "";
         try {
@@ -36,8 +36,10 @@ public class Main {
         //temp path, used to get parent directories
         Path tempPath = Paths.get(jarDirectory); 
         Path pathToSRC = tempPath.getParent();
-        String trueRentalsFilePath = pathToSRC.toString()+File.separator+"src"+File.separator+"test"+File.separator+"java"+File.separator+"resources"+File.separator+rentalsFile;
-        String trueuserAccountsFilePath = pathToSRC.toString()+File.separator+"src"+File.separator+"test"+File.separator+"java"+File.separator+"resources"+File.separator+userAccountsFile;
+        String trueRentalsFilePath = pathToSRC.toString()+File.separator+"src"+File.separator+"test"+File.separator+"java"+File.separator+"resources"+File.separator+rentalsFileName;
+        String trueuserAccountsFilePath = pathToSRC.toString()+File.separator+"src"+File.separator+"test"+File.separator+"java"+File.separator+"resources"+File.separator+userAccountsFileName;
+        File rentalsFile = new File(trueRentalsFilePath);
+        File userAccountsFile = new File(trueuserAccountsFilePath);
 
         String userInput = "";    
         while (!userInput.equalsIgnoreCase("quit")) {
@@ -55,7 +57,7 @@ public class Main {
 
             //reads in the useraccounts file
             try {
-                Parser.readUserAccountsFile(trueRentalsFilePath, trueuserAccountsFilePath);
+                Parser.readUserAccountsFile(rentalsFile, userAccountsFile);
             } catch (FileNotFoundException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -75,11 +77,11 @@ public class Main {
             } while (!command.isUser(userInput, trueuserAccountsFilePath)); //keep asking for a valid username while the username given is not a username in the useraccounts.txt file
 
             //create a user with the info given
-            User user = new User(userInput, command.getUserType(userInput, trueuserAccountsFilePath), trueRentalsFilePath, trueuserAccountsFilePath);
+            User user = new User(userInput, command.getUserType(userInput), trueRentalsFilePath, trueuserAccountsFilePath);
 
             //reads in the avaliable rental units file since the user has sucessfully logged in 
             try {
-                Parser.readAvailableRentalsFile(trueRentalsFilePath, trueuserAccountsFilePath);
+                Parser.readAvailableRentalsFile(rentalsFile, userAccountsFile);
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

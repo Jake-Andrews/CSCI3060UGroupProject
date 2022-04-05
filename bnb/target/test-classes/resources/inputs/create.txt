@@ -1,8 +1,0 @@
-login
-USER
-create
-USER123
-USER9
-AA
-logout
-exit
