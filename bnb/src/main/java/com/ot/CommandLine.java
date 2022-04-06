@@ -1,5 +1,6 @@
 package com.ot;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class CommandLine {
@@ -22,7 +23,7 @@ public class CommandLine {
     //Used by various commands (delete)
     public Boolean isAdmin(String username, String filename) {
         //puts lines from useraccounts.txt into arraylist
-        ArrayList<String> fileContents = Parser.readFileIntoArrayList(filename);
+        ArrayList<String> fileContents = Parser.readFileIntoArrayList(new File(filename));
 
         //loop through the arraylist, find the username given, check if they are an admin
         for (String user: fileContents){
@@ -42,7 +43,7 @@ public class CommandLine {
     //used in main to check that the username given is in the useraccounts.txt file
     public Boolean isUser(String username, String filename) {
         //puts lines from useraccounts.txt into arraylist
-        ArrayList<String> fileContents = Parser.readFileIntoArrayList(filename);
+        ArrayList<String> fileContents = Parser.readFileIntoArrayList(new File(filename));
 
         //fileContents.forEach(line->System.out.println(line.split("_")[0]));
 
