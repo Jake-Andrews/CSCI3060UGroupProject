@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.junit.Rule;
 
-
+//Condition and loop coverage
 public class UserTest 
 {
     //Create a temporary folder, used to create temporary useraccounts/rentalsfiles for testing
@@ -57,20 +57,32 @@ public class UserTest
         Files.write(Paths.get(rentalsFile.getName()), lines1, StandardCharsets.UTF_8);
 
         User user = new User("USER", "AA", rentalsFile.getAbsolutePath(), rentalsFile.getAbsolutePath());
-        System.out.println("Assert equals user.writeToRentalsFile.");
-
+        
+        System.out.println("Assert equals user.writeToRentalsFile Test #1");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVWXY_1_999.90_t_00", user.writeToRentalsFile(unit));
+        System.out.println("Assert equals user.writeToRentalsFile Test #2");
         assertEquals("12345678_ABCDEFGHIJKLM__ABCDEFGHIJKLMNOPQRSTUVWXY_1_999.90_t_00", user.writeToRentalsFile(unit1));
+        System.out.println("Assert equals user.writeToRentalsFile Test #3");
         assertEquals("12345678_ABCDEFGHIJKL___ABCDEFGHIJKLMNOPQRSTUVWXY_1_999.90_t_00", user.writeToRentalsFile(unit2));
+        System.out.println("Assert equals user.writeToRentalsFile Test #4");
         assertEquals("12345678_ABCDEFGHIJK____ABCDEFGHIJKLMNOPQRSTUVWXY_1_999.90_t_00", user.writeToRentalsFile(unit3));
+        System.out.println("Assert equals user.writeToRentalsFile Test #5");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVWX__1_999.90_t_00", user.writeToRentalsFile(unit4));
+        System.out.println("Assert equals user.writeToRentalsFile Test #6");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVW___1_999.90_t_00", user.writeToRentalsFile(unit5));
+        System.out.println("Assert equals user.writeToRentalsFile Test #7");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUV____1_999.90_t_00", user.writeToRentalsFile(unit6));
+        System.out.println("Assert equals user.writeToRentalsFile Test #8");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVWXY_1_99.90__t_00", user.writeToRentalsFile(unit7));
+        System.out.println("Assert equals user.writeToRentalsFile Test #9");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVWXY_1_9.90___t_00", user.writeToRentalsFile(unit8));
+        System.out.println("Assert equals user.writeToRentalsFile Test #10");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVWXY_1_0.90___t_00", user.writeToRentalsFile(unit9));
+        System.out.println("Assert equals user.writeToRentalsFile Test #11");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVWXY_1_999.90_t_00", user.writeToRentalsFile(unit10));
+        System.out.println("Assert equals user.writeToRentalsFile Test #12");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVWXY_1_999.90_f_00", user.writeToRentalsFile(unit11));
+        System.out.println("Assert equals user.writeToRentalsFile Test #13");
         assertEquals("12345678_ABCDEFGHIJKLMN_ABCDEFGHIJKLMNOPQRSTUVWXY_1_999.90_t_10", user.writeToRentalsFile(unit12));
     }
 }

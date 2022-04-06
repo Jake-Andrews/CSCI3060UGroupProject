@@ -11,10 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
-
-import org.junit.Assert;
 import org.junit.Rule;
 
+//statement coverage
 
 public class CommandLineTest 
 {

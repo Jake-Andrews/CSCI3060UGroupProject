@@ -390,7 +390,7 @@ public class User {
 
         }
 
-        for (int i = 0; i < (6 - (String.valueOf(String.format("%.2f",newUnit.getRentalPricePerNight()))).length()); i++) {
+        for (int i = 0; i < (6 - (String.format("%.2f",newUnit.getRentalPricePerNight())).length()); i++) {
             toWriteToFile += "_";
         }
         toWriteToFile += "_";
