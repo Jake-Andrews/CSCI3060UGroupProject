@@ -1,11 +1,12 @@
+#Parent path is a path to the directory the script was run in
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 cd "$parent_path" #cd into transaction_sessions
 
-#Deletes transactions file in the directory
+#Deletes files from previous daily.sh run
 find -type f -name '*dailytransactionsfile*' -delete #delete any file that matches the string provided
-#Remove all the files in merged_transaction_files
-rm $parent_path/merged_transaction_files
-
+find -type f -name 'mergedtransactionsfile.txt' -delete
+find -type f -name 'mock_data.txt' -delete
+find -type f -name 'data.txt' -delete
 
 #overwriting useracounts.txt file, so we have the same starting state for every run of tests 
 echo    "UUUUUUUUUU_____AA" > useraccounts.txt #> overwrites
@@ -58,4 +59,8 @@ done
 #Concatenate the daily transaction txt files into a merged txt file
 cd $PWD/merged_transaction_files
 cat *.txt >> mergedtransactionsfile.txt
-find -type f -name '*dailytransactionsfile*' -delete #delete any file that matches the string provided
+#delete the transaction files since we created a merged file above
+find -type f -name '*dailytransactionsfile*' -delete
+
+#executing back end stub
+/bin/bash $parent_path/backendstub.sh

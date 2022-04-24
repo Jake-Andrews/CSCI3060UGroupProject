@@ -1,0 +1,1 @@
+sed 's/[_]//g' test.txt > test1.txt
