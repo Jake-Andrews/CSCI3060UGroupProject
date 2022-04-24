@@ -8,7 +8,11 @@ USER123________AA
 USER___________AA
 USER01_________AA
 USER011________FS
+USER02_________FS
+USER03_________RS
+USER04_________PS
 USER05_________PS
+USERTEST_______AA
 USER9__________AA
 USER531________AA
 USER631________AA

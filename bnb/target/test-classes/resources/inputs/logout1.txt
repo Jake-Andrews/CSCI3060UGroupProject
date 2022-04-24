@@ -1,5 +1,0 @@
-logout
-login
-USER
-logout
-exit

@@ -1,6 +1,0 @@
-login
-USER
-delete
-USER03
-logout
-exit
