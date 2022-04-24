@@ -1,0 +1,7 @@
+login
+USER
+delete
+USER01
+USER11
+logout
+exit

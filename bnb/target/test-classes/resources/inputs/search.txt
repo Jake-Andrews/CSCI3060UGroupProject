@@ -1,0 +1,8 @@
+login
+USER
+search
+Whitby
+300.0
+2
+logout
+exit

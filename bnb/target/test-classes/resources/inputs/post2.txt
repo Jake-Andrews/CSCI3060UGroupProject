@@ -1,0 +1,9 @@
+login
+USER
+post
+Toronto
+1000.00
+500.00
+5
+logout
+exit

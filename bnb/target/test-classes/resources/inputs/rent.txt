@@ -1,0 +1,8 @@
+login
+USER
+rent
+117fb1bf
+14
+yes
+logout
+exit

@@ -1,0 +1,6 @@
+login
+USER
+delete
+USER04
+logout
+exit
