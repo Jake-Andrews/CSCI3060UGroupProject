@@ -59,3 +59,70 @@ done
 cd $PWD/merged_transaction_files
 cat *.txt >> mergedtransactionsfile.txt
 find -type f -name '*dailytransactionsfile*' -delete #delete any file that matches the string provided
+
+# Create a new txt file for the data to be stored
+touch data.txt
+
+isNewSession = true
+
+# Read the merged daily transaction files
+read mergedtransactionsfile.txt
+while read line
+do
+    if [ $isNewSession = true ];
+    then
+    # Login with the username on the transaction
+    echo "login" >> data.txt
+    echo ${line:3:13} >> data.txt
+    isNewSession = false
+    fi
+
+    case ${line:0:2} in 
+    "01")
+    # Create
+    echo "create" >> data.txt
+    echo ${line:3:13} >> data.txt
+    echo "AA" >> data.txt
+    ;;
+
+    "02")
+    # Delete
+    echo "delete" >> data.txt
+    echo ${line:3:13} >> data.txt
+    ;;
+
+    "03")
+    # Post
+    echo "post" >> data.txt
+    echo ${line:26:41} >> data.txt
+    echo ${line:42:43} >> data.txt
+    echo ${line:51:53} >> data.txt
+    ;;
+
+    "04")
+    # Search
+    echo "search" >> data.txt
+    echo ${line:26:41} >> data.txt
+    echo ${line:42:43} >> data.txt
+    echo ${line:51:53} >> data.txt
+    ;;
+
+    "05")
+    # Rent
+    echo "rent" >> data.txt
+    echo ${line:17:25} >> data.txt
+    echo ${line:51:53} >> data.txt
+    echo "yes" >> data.txt
+    ;;
+
+    *)
+    # Logout
+    echo "logout" >> data.txt
+    echo "exit" >> data.txt
+    isNewSession = true
+    ;;
+    esac  
+done
+
+# Replace the underscores in the data file with white space
+sed 's/[_]//g' data.txt > mock_data.txt
